@@ -1,38 +1,35 @@
 <?php
-namespace frontend\models;
+
+namespace frontend\modules\user\models;
 
 use Yii;
 use yii\base\Model;
-use common\models\User;
+use frontend\models\User;
 use frontend\models\events\UserRegisteredEvent;
 
 /**
  * Signup form
  */
-class SignupForm extends Model
-{
+class SignupForm extends Model {
+
     public $username;
     public $email;
     public $password;
 
-
     /**
      * {@inheritdoc}
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             ['username', 'trim'],
             ['username', 'required'],
             ['username', 'unique', 'targetClass' => User::className(), 'message' => 'This username has already been taken.'],
             ['username', 'string', 'min' => 2, 'max' => 60],
-
             ['email', 'trim'],
             ['email', 'required'],
             ['email', 'email'],
             ['email', 'string', 'max' => 40],
             ['email', 'unique', 'targetClass' => User::className(), 'message' => 'This email address has already been taken.'],
-
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
         ];
@@ -43,12 +40,11 @@ class SignupForm extends Model
      *
      * @return bool whether the creating new account was successful and email was sent
      */
-    public function signup()
-    {
+    public function signup() {
         if (!$this->validate()) {
             return null;
         }
-        
+
         $user = new User();
         $user->username = $this->username;
         $user->email = $this->email;
@@ -56,15 +52,14 @@ class SignupForm extends Model
         $user->generateAuthKey();
         $user->generateEmailVerificationToken();
         if ($user->save()) {
-           $event = new UserRegisteredEvent(); 
-           $event->user = $user;
-           $event->subject = 'New user registered';
-           
-           $user->trigger(User::USER_REGISTERED, $event);
-           
-            return $user;
-        } 
+            $event = new UserRegisteredEvent();
+            $event->user = $user;
+            $event->subject = 'New user registered';
 
+            $user->trigger(User::USER_REGISTERED, $event);
+
+            return $user;
+        }
     }
 
     /**

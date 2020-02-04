@@ -12,6 +12,11 @@ return [
     'bootstrap' => ['log'],
     'language' => 'ru',
     'controllerNamespace' => 'frontend\controllers',
+    'modules' => [
+        'user' => [
+            'class' => 'frontend\modules\user\Module',
+        ],
+    ],
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-frontend',

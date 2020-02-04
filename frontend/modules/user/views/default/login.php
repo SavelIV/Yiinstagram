@@ -25,9 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= $form->field($model, 'rememberMe')->checkbox() ?>
 
             <div style="color:#999;margin:1em 0">
-                If you forgot your password you can <?= Html::a('reset it', ['site/request-password-reset']) ?>.
-                <br>
-                Need new verification email? <?= Html::a('Resend', ['site/resend-verification-email']) ?>
+                If you forgot your password you can <?= Html::a('reset it', ['default/request-password-reset']) ?>.
             </div>
 
             <div class="form-group">
@@ -42,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
             use yii\authclient\widgets\AuthChoice; ?>
             <?php
             $authAuthChoice = AuthChoice::begin([
-                        'baseAuthUrl' => ['site/auth']
+                        'baseAuthUrl' => ['default/auth']
             ]);
             ?>
 
