@@ -31,5 +31,22 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <?php ActiveForm::end(); ?>
         </div>
+         <div class="col-lg-5">
+            <h3>Login with:</h3>
+            <?php
+            use yii\authclient\widgets\AuthChoice; ?>
+            <?php
+            $authAuthChoice = AuthChoice::begin([
+                        'baseAuthUrl' => ['default/auth']
+            ]);
+            ?>
+
+            <?php foreach ($authAuthChoice->getClients() as $client): ?>
+           
+                <?= $authAuthChoice->clientLink($client) ?>
+          
+            <?php endforeach; ?>
+            <?php AuthChoice::end(); ?>
+        </div>
     </div>
 </div>
