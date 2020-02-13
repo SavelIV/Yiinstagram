@@ -7,6 +7,7 @@ use frontend\modules\user\models\Auth;
 use frontend\models\User;
 use yii\authclient\ClientInterface;
 use yii\helpers\ArrayHelper;
+use frontend\models\events\UserRegisteredEvent;
 
 /**
  * AuthHandler handles successful authentication via Yii auth component
@@ -63,21 +64,6 @@ class AuthHandler {
         $id = ArrayHelper::getValue($attributes, 'id');
         $name = ArrayHelper::getValue($attributes, 'name');
 
-//        echo '<pre>';
-//        print_r($attributes);
-//        echo '</pre>'; 
-//        echo '<pre>';
-//        print_r($email);
-//        echo '</pre>';
-//        echo '<pre>';
-//        print_r($id);
-//        echo '</pre>';
-//        echo '<pre>';
-//        print_r($name);
-//        echo '</pre>';
-//        die;
-//        
-
         if ($email !== null && User::find()->where(['email' => $email])->exists()) {
             Yii::$app->getSession()->setFlash('error', [
                 Yii::t('app', "User with the same email as in {client} account already exists "
@@ -93,6 +79,13 @@ class AuthHandler {
             $auth = $this->createAuth($user->id, $id);
             if ($auth->save()) {
                 $transaction->commit();
+
+                $event = new UserRegisteredEvent();
+                $event->user = $user;
+                $event->subject = 'New user registered';
+
+                $user->trigger(User::USER_REGISTERED, $event);
+
                 return $user;
             }
         }

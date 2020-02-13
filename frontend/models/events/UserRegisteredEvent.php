@@ -36,5 +36,9 @@ class UserRegisteredEvent extends Event implements UserNotificationInterface
     {
         return $this->user->email;
     }
+    public function getUsername() 
+    {
+        return $this->user->username;
+    }
 
 }

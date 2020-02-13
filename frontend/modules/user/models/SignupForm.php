@@ -50,7 +50,6 @@ class SignupForm extends Model {
         $user->email = $this->email;
         $user->setPassword($this->password);
         $user->generateAuthKey();
-        $user->generateEmailVerificationToken();
         if ($user->save()) {
             $event = new UserRegisteredEvent();
             $event->user = $user;

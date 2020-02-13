@@ -100,7 +100,7 @@ class DefaultController extends Controller
     public function actionLogout()
     {
         Yii::$app->user->logout();
-        Yii::$app->session->setFlash('success', 'You have logout successfully.');
+        Yii::$app->session->setFlash('info', 'You have logout successfully.');
 
         return $this->goHome();
     }

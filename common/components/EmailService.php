@@ -21,7 +21,7 @@ class EmailService extends Component {
     public function notifyUser(UserNotificationInterface $event)
     {
         return Yii::$app->mailer->compose()
-                ->setFrom('admin@saviv.site')
+                ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' admin'])
                 ->setTo($event->getEmail())
                 ->setSubject($event->getSubject())
                 ->setHtmlBody('<b>Добро пожаловать на сайт yii2site.com</b>')
@@ -34,10 +34,12 @@ class EmailService extends Component {
     public function notifyAdmins(UserNotificationInterface $event)
     {
         return Yii::$app->mailer->compose()
-                ->setFrom('admin@saviv.site')
+                ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
                 ->setTo('saviv@saviv.site')
                 ->setSubject($event->getSubject())
-                ->setHtmlBody('<b>Зарегистрирован новый пользователь на сайте yii2site.com</b>')
+                ->setHtmlBody('<b>Зарегистрирован новый пользователь на сайте yii2site.com</b>'
+                        .'<hr>Username: ' . $event->getUsername() 
+                        .'<hr>Email: ' . $event->getEmail())
                 ->send();
     }
    
