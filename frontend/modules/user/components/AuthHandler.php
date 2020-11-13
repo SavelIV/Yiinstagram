@@ -33,6 +33,7 @@ class AuthHandler {
         if ($auth) {
             /* @var User $user */
             $user = $auth->user;
+            Yii::$app->session->setFlash('success', 'You have login successfully.');
             return Yii::$app->user->login($user);
         }
         if ($user = $this->createAccount($attributes)) {

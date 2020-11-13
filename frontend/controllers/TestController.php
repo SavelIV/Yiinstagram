@@ -1,16 +1,21 @@
 <?php
 
 namespace frontend\controllers;
+
+use console\models\Sender;
+use console\models\Subscriber;
 use Faker\Factory;
 use Yii;
 use yii\web\Controller;
+use frontend\models\Subscribe;
 use frontend\models\Test;
 use frontend\models\News;
 
 class TestController extends Controller
- {
+{
 
-    public function actionGenerate() {
+    public function actionGenerate()
+    {
 
 
         /* faker-generator */
@@ -19,7 +24,7 @@ class TestController extends Controller
 
             $news = [];
             for ($i = 0; $i < 1000; $i++) {
-                $news[] = [$faker->text(rand(30, 45)), $faker->text(rand(2000, 3000)), rand(0, 1)];
+                $news[] = [$faker->text(rand(20, 35)), $faker->text(rand(1000, 1500)), rand(1, 3)];
             }
 
             Yii::$app->db->createCommand()->batchInsert('news', ['title', 'content', 'status'], $news)->execute();
@@ -30,40 +35,54 @@ class TestController extends Controller
     //
     public function actionIndex()
     {
-      $max = Yii::$app->params['maxNewsInList'];  
-      
-      $list = Test::getNewsList($max);
-      
-      return $this->render('index',[
-          'list' => $list, 
-              ]); 
-        
+        $max = Yii::$app->params['maxNewsInList'];
+
+        $list = Test::getNewsList($max);
+
+        return $this->render('index', [
+            'list' => $list,
+        ]);
+
     }
-    
+    public function actionM()
+    {
+        $max = Yii::$app->params['maxNewsInList'];
+
+        $newsList = Test::getNewsList($max);
+
+        return $this->render('newslist', [
+            'newsList' => $newsList,
+        ]);
+
+    }
+
     //
     public function actionView($id)
     {
-      $item = Test::getNewsItemById($id);
-      
-      return $this->render('view',[
-          'item' => $item, 
-              ]); 
-        
+        $item = Test::getNewsItemById($id);
+
+        return $this->render('view', [
+            'item' => $item,
+        ]);
+
     }
-    //Mail sender:  yii2frontend.com/test/mail
-    
-//    public function actionMail ()
-//    {
-//        $result = Yii::$app->mailer->compose()
-//                ->setFrom('savelevi55@gmail.com')
-//                ->setTo('savelevi@mail.ru')
-//                ->setSubject('Тема сообщения: отправка почты с сайта yii2frontend.com')
-//                ->setTextBody('Заголовок сообщения?')
-//                ->setHtmlBody('<b>текст сообщения в формате HTML: записан в тегах</b>')
-//                ->send();
-//        
-//        var_dump($result);die; // return: bool(true)
-//    }
+    //Mail sender:  yii2site.com/test/mail
+
+    public function actionMail()
+    {
+        $maxNews = Yii::$app->params['maxNewsInList'];
+        $newsList = \console\models\News::getList($maxNews);
+        $model = new Subscribe();
+        $subscribers = Subscriber::getList();
+
+        $count = Sender::run($subscribers,$newsList);
+
+        return $this->render('/test/subscribe',[
+            'model' => $model,
+            'subscribers' => $subscribers,
+            'count' => $count
+        ]);
+    }
 }
 
 

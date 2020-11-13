@@ -1,8 +1,20 @@
-<?php /* @var $newsList[] array */ ?>
+<?php
 
-<?php foreach ($newsList as $item):?>
+use yii\helpers\Html;
 
-    <h1><?php echo $item['title']; ?></h1>
+/* @var $newsList [] array */
+
+?>
+
+<?php foreach ($newsList as $item): ?>
+
+    <?php $newsLink = Yii::$app->urlManager->createAbsoluteUrl(['news/' . $item['id']]); ?>
+
+    <h1><?php echo Html::a(Html::encode($item['title']), $newsLink); ?></h1>
+
+<!--    --><?php //echo Html::a(Html::img('@images/' . $item['status'] . '.jpg'), $newsLink); ?>
+    <?php echo Html::a(Html::img('https://source.unsplash.com/400x180/?surf'), $newsLink); ?>
+
     <p><?php echo $item['content']; ?>...</p>
 
     <hr>

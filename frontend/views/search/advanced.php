@@ -4,6 +4,8 @@
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 use frontend\helpers\HighlightHelper;
+
+$this->title = 'Search';
 ?>
 <h1>Search Sphinx</h1>
 

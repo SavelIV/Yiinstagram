@@ -38,7 +38,7 @@ class SignupForm extends Model {
     /**
      * Signs user up.
      *
-     * @return bool whether the creating new account was successful and email was sent
+     * @return User $user
      */
     public function signup() {
         if (!$this->validate()) {

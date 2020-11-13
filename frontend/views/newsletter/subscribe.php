@@ -1,11 +1,14 @@
-<?php 
+<?php
+use yii\helpers\Html;
+use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View  */
 /* @var $model frontend\models\Subscribe  */
+/* @var $subscribers console\models\Subscriber  */
 
 
 /*Заголовок страницы:*/
-$this->title = 'Подпишитесь на новости!';
+$this->title = 'Subscribe to newsletter';
 
 /* Установка метатегов:*/
 $this->registerMetaTag([
@@ -13,25 +16,12 @@ $this->registerMetaTag([
   'content' => 'Description of the page...'
 ]);
 
-/* Установка breadcrumbs:*/
-$this->params['breadcrumbs'] = [
-  'Test 1',
-  'Test 2',
-  ['label' => 'Test 3', 'url' => ['/site/index']],
-  'Test 4',
-];
 
-if ($model->hasErrors()) {
-    echo '<pre>';
-    print_r($model->getErrors());
-    echo '</pre>';
-}
 ?>
-<form method="post">
-    <p>Email:</p>
-    <input type="text" name="email" />
-    <br><br>
-    <input type="submit" />
-</form>
+<?php $form = ActiveForm::begin() ?>
+<?= $form->field($model, 'email') ?>
+<?= Html::submitButton('Send', ['class' => 'btn btn-success']) ?>
+<?php ActiveForm::end() ?>
+
 
 

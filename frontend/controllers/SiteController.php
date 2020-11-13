@@ -1,16 +1,20 @@
 <?php
+
 namespace frontend\controllers;
 
 use Yii;
 use yii\web\Controller;
 use frontend\models\ContactForm;
+use yii\web\Cookie;
 use frontend\models\User;
+
 /**
  * Site controller
  */
 class SiteController extends Controller
 {
-   
+    const FEED_POSTS_LIMIT = 3;
+    const ACTIVE_USERS_LIMIT = 8;
 
     /**
      * {@inheritdoc}
@@ -27,8 +31,8 @@ class SiteController extends Controller
             ],
         ];
     }
-    
-   
+
+
     /**
      * Displays homepage.
      *
@@ -36,13 +40,43 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $users = User::find()->all();
-        return $this->render('index' ,[
+        $users = User::find()->limit(self::ACTIVE_USERS_LIMIT)->all();
+
+        /* @var $currentUser User */
+        if ($currentUser = Yii::$app->user->identity) {
+            $feedItems = $currentUser->getFeed(self::FEED_POSTS_LIMIT);
+        }
+
+        return $this->render('index', [
             'users' => $users,
+            'feedItems' => $feedItems,
+            'currentUser' => $currentUser,
         ]);
     }
 
-   
+ /**
+     * Displays Newsfeed page.
+     *
+     * @return mixed
+     */
+    public function actionNewsfeed()
+    {
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['/user/default/login']);
+        }
+
+        /* @var $currentUser User */
+        if ($currentUser = Yii::$app->user->identity) {
+            $limit = Yii::$app->params['feedPostLimit'];
+            $feedItems = $currentUser->getFeed($limit);
+        }
+
+        return $this->render('newsfeed', [
+            'feedItems' => $feedItems,
+            'currentUser' => $currentUser,
+        ]);
+    }
+
 
     /**
      * Displays contact page.
@@ -78,7 +112,22 @@ class SiteController extends Controller
         return $this->render('about');
     }
 
-   
+    /**
+     * Change language
+     * @return mixed
+     */
+    public function actionLanguage()
+    {
+        $language = Yii::$app->request->post('language');
+        Yii::$app->language = $language;
 
-    
+        $languageCookie = new Cookie([
+            'name' => 'language',
+            'value' => $language,
+            'expire' => time() + 60 * 60 * 24 * 30, // 30 days
+        ]);
+        Yii::$app->response->cookies->add($languageCookie);
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+
 }

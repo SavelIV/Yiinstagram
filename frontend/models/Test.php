@@ -26,8 +26,8 @@ class Test
             foreach ($result as &$item) {
                 $item['content'] = Yii::$app->stringHelper->getShort($item['content']);
             }
-            return $result;
         }
+        return $result;
     }
     
     /**

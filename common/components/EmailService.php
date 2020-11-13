@@ -24,7 +24,7 @@ class EmailService extends Component {
                 ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' admin'])
                 ->setTo($event->getEmail())
                 ->setSubject($event->getSubject())
-                ->setHtmlBody('<b>Добро пожаловать на сайт yii2site.com</b>')
+                ->setHtmlBody('<b>Добро пожаловать на сайт '. Yii::$app->name.'</b>')
                 ->send();
     }
    /**
@@ -37,7 +37,7 @@ class EmailService extends Component {
                 ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
                 ->setTo('saviv@saviv.site')
                 ->setSubject($event->getSubject())
-                ->setHtmlBody('<b>Зарегистрирован новый пользователь на сайте yii2site.com</b>'
+                ->setHtmlBody('<b>Зарегистрирован новый пользователь на сайте ' . Yii::$app->name .'</b>'
                         .'<hr>Username: ' . $event->getUsername() 
                         .'<hr>Email: ' . $event->getEmail())
                 ->send();

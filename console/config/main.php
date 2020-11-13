@@ -14,6 +14,7 @@ return [
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
+        '@images' => '/files/photos',
     ],
     'controllerMap' => [
         'fixture' => [
@@ -28,6 +29,15 @@ return [
                     'class' => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning'],
                 ],
+            ],
+        ],
+        'urlManager' => [
+            'baseUrl' => 'http://yii2site.com',
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'rules' => [
+                'news' => 'test/index',
+                'news/<id:\d+>' => 'test/view',
             ],
         ],
         'stringHelper' => [

@@ -22,12 +22,12 @@ class PublisherController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
                 ],
             ],
-            AccessBehavior::className(),
+            AccessBehavior::class,
         ];
     }
 

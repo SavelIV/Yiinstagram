@@ -10,14 +10,14 @@ class EmployeeController extends Controller
 {
     public function actionIndex()
     {
-        $employee1=new Employee();
+        $employee1 = new Employee();
         $employee1->firstName = 'Alex';
         $employee1->lastName = 'Smith';
         $employee1->middleName = 'John';
         $employee1->salary = 1000;
         
         echo $employee1['salary'];
-        
+
         echo '<hr>';
         
         foreach ($employee1 as $attribute => $value){
@@ -32,13 +32,11 @@ class EmployeeController extends Controller
     {
         $model = new Employee();
         $model ->scenario = Employee::SCENARIO_EMPLOYEE_REGISTER;
-        
-        if ($model->load(Yii::$app->request->post())) {
-            
-            if ($model->validate() && $model->save()) {
-                Yii::$app->session->setFlash('success', 'Registered!');
-            }
-            
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+
+            Yii::$app->session->setFlash('success', 'Registered!');
+            return $this->refresh();
         }
         return $this->render('register',[
             'model' => $model,
@@ -48,20 +46,14 @@ class EmployeeController extends Controller
     /*
      * Employee details update example
      */
-    public function actionUpdate()
+    public function actionUpdate($id)
     {
-        $model = new Employee();
+        $model = Employee::findOne($id);
         $model->scenario = Employee::SCENARIO_EMPLOYEE_UPDATE;
 
-        $formData = Yii::$app->request->post();
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
-        if (Yii::$app->request->isPost) {
-
-            $model->attributes = $formData;
-
-            if ($model->validate() && $model->save()) {
                 Yii::$app->session->setFlash('success', 'Updated!');
-            }
         }
         return $this->render('update', [
                     'model' => $model,

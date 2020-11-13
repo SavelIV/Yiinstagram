@@ -18,15 +18,17 @@ class Sender
     public static function run($subscribers, $newsList) {
         
         $count = 0;
-        
+
         foreach ($subscribers as $subscriber) {
-            $result = Yii::$app->mailer->compose('/mailer/newslist',[
-                'newsList' => $newsList
+
+            $result = Yii::$app->mailer->compose('/mailer/newslist', [
+                'newsList' => $newsList,
             ])
-                    ->setFrom('savelevi55@gmail.com')
+                    ->setFrom([Yii::$app->params['adminEmail'] => Yii::$app->params['senderName']])
                     ->setTo($subscriber['email'])
-                    ->setSubject('Тема сообщения: отправка почты с сайта yii2frontend.com')
+                    ->setSubject('Последние новости с сайта yii2site.com')
                     ->send();
+
 
             if ($result) {
                 $count++;

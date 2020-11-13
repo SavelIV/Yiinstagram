@@ -3,24 +3,6 @@ body {
     height: 100%;
 }
 
-.wrap {
-    min-height: 100%;
-    height: auto;
-    margin: 0 auto -60px;
-    padding: 0 0 60px;
-}
-
-.wrap > .container {
-    padding: 70px 15px 20px;
-}
-
-.footer {
-    height: 60px;
-    background-color: #f5f5f5;
-    border-top: 1px solid #ddd;
-    padding-top: 20px;
-}
-
 .jumbotron {
     text-align: center;
     background-color: transparent;
@@ -101,12 +83,17 @@ a.desc:after {
     border: none;
 }
 
-@media(max-width:767px) {
+@media (max-width: 768px) {
     .nav li > form > button.logout {
-        display:block;
+        display: block;
         text-align: left;
         width: 100%;
         padding: 10px 15px;
+    }
+
+    header .header-top .brand-logo {
+        width: 50%;
+        margin-left: 33.33333333%;
     }
 }
 
@@ -117,4 +104,131 @@ a.desc:after {
 
 .nav > li > form > button.logout:focus {
     outline: none;
+}
+
+/* fade out alerts */
+.alert {
+    animation: fadeOut ease 15s;
+    -webkit-animation: fadeOut ease 15s;
+    -moz-animation: fadeOut ease 15;
+    -o-animation: fadeOut ease 15s;
+    -ms-animation: fadeOut ease 15s;
+}
+@keyframes fadeOut {
+    0% {opacity:1;}
+    10% {opacity:0.3;}
+    11% {opacity:1;}
+    20% {opacity:0.3;}
+    21% {opacity:1;}
+    30% {opacity:0.3;}
+    31% {opacity:1;}
+    100% {opacity:0;}
+}
+
+@-moz-keyframes fadeOut {
+    0% {opacity:1;}
+    10% {opacity:0.3;}
+    11% {opacity:1;}
+    20% {opacity:0.3;}
+    21% {opacity:1;}
+    30% {opacity:0.3;}
+    31% {opacity:1;}
+    100% {opacity:0;}
+}
+
+@-webkit-keyframes fadeOut {
+    0% {opacity:1;}
+    10% {opacity:0.3;}
+    11% {opacity:1;}
+    20% {opacity:0.3;}
+    21% {opacity:1;}
+    30% {opacity:0.3;}
+    31% {opacity:1;}
+    100% {opacity:0;}
+}
+
+@-o-keyframes fadeOut {
+    0% {opacity:1;}
+    10% {opacity:0.3;}
+    11% {opacity:1;}
+    20% {opacity:0.3;}
+    21% {opacity:1;}
+    30% {opacity:0.3;}
+    31% {opacity:1;}
+    100% {opacity:0;}
+}
+
+@-ms-keyframes fadeOut {
+    0% {opacity:1;}
+    10% {opacity:0.3;}
+    11% {opacity:1;}
+    20% {opacity:0.3;}
+    21% {opacity:1;}
+    30% {opacity:0.3;}
+    31% {opacity:1;}
+    100% {opacity:0;}
+}
+.alert.fade.in {
+    opacity: 0;
+}
+
+/*for text search*/
+.yellow {
+    background-color: yellow;
+}
+
+.display-none {
+    display: none;
+}
+
+/*for main page author image*/
+.photo {
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #444;
+}
+.author-image {
+    width: auto;
+    height: 100%;
+    margin: 0 auto;
+    /*max-width: none;*/
+}
+
+/*for main page feeditems*/
+.post-type-image {
+    padding: 0;
+    position: relative;
+    width:200px;
+    height:200px;
+    background: #c2c2c2;
+    border: 1px solid #000;
+    border-radius:3px;
+}
+
+.post-type-image img{
+    position: absolute;
+    left:50%;
+    top:50%;
+    transform: translate(-50%, -50%);
+    max-width:100%;
+    max-height: 100%;
+}
+
+/*for profile page posts*/
+.box-flex {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.box-flex-img {
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+}
+
+.box-flex-img img {
+    width: initial;
+    height: 100%;
 }

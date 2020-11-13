@@ -12,7 +12,7 @@ class BookshopController extends \yii\web\Controller
     public function behaviors()
     {
         return [
-            AccessBehavior::className(),            
+            AccessBehavior::class,
         ];
     }
     public function actionIndex()

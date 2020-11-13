@@ -3,33 +3,21 @@
 namespace frontend\models;
 
 use Yii;
-use yii\base\Model;
+use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 
-class Employee extends Model {
+class Employee extends ActiveRecord {
 
     const SCENARIO_EMPLOYEE_REGISTER = 'employee_register';
     const SCENARIO_EMPLOYEE_UPDATE = 'employee_update';
-
-    public $firstName;
-    public $lastName;
-    public $middleName;
-    public $salary;
-    public $email;
-    
-    public $birthDate;
-    public $hiringDate;
-    public $city;
-    public $position;
-    public $idCode;
     
     public function scenarios()
     {
         return[
-            self::SCENARIO_EMPLOYEE_REGISTER => ['firstName', 'lastName', 'middleName', 'email', 'birthDate', 'hiringDate', 'city', 'position', 'idCode'],
-            self::SCENARIO_EMPLOYEE_UPDATE => ['firstName', 'lastName', 'middleName'],
+            self::SCENARIO_EMPLOYEE_REGISTER => ['first_name', 'last_name', 'middle_name', 'email', 'birth_date', 'hiring_date', 'city', 'position', 'id_code'],
+            self::SCENARIO_EMPLOYEE_UPDATE => ['first_name', 'last_name', 'middle_name'],
         ];
-        
+
     }
     /*
      * Validation rules
@@ -37,24 +25,20 @@ class Employee extends Model {
     public function rules()
     {
         return [
-            [['firstName', 'lastName', 'email', 'birthDate'], 'required'],
-            [['firstName'], 'string', 'min' =>2],
-            [['lastName'], 'string', 'min' =>3],
+            [['first_name', 'last_name', 'email', 'birth_date'], 'required'],
+            [['first_name'], 'string', 'min' =>2],
+            [['last_name'], 'string', 'min' =>3],
             [['email'], 'email'],
-            [['middleName'], 'required', 'on' => self::SCENARIO_EMPLOYEE_UPDATE],
+            [['middle_name'], 'required', 'on' => self::SCENARIO_EMPLOYEE_UPDATE],
             
-            [['birthDate', 'hiringDate'], 'date', 'format' => 'php:Y-m-d'],
+            [['birth_date', 'hiring_date'], 'date', 'format' => 'php:Y-m-d'],
             [['city'], 'integer'],
             [['position'], 'string'],
-            [['idCode'], 'string', 'length' => 10],
-            [['hiringDate', 'position', 'idCode'], 'required', 'on' => self::SCENARIO_EMPLOYEE_REGISTER],
+            [['id_code'], 'string', 'length' => 10],
+            [['hiring_date', 'position', 'id_code'], 'required', 'on' => self::SCENARIO_EMPLOYEE_REGISTER],
         ];
     }
-    public function save()
-    {
-        return true;
-        
-    }
+
     public static function getCitiesList()
     {
         $sql = 'SELECT * FROM city';

@@ -33,7 +33,7 @@ class Book extends ActiveRecord
   
   public function getPublisher()
   {
-    return $this->hasOne(Publisher::className(), ['id' => 'publisher_id'])->one(); 
+    return $this->hasOne(Publisher::class, ['id' => 'publisher_id'])->one();
   }
   
   public function getPublisherName()
@@ -46,12 +46,12 @@ class Book extends ActiveRecord
   
   public function getBookToAuthorRelations() 
   {
-        return $this->hasMany(BookToAuthor::className(), ['book_id' => 'id']);
+        return $this->hasMany(BookToAuthor::class, ['book_id' => 'id']);
   }
 
   public function getAuthors() 
   {
-        return $this->hasMany(Author::className(), ['id' => 'author_id'])->via('bookToAuthorRelations')->all();
+        return $this->hasMany(Author::class, ['id' => 'author_id'])->via('bookToAuthorRelations')->all();
   }
   
  

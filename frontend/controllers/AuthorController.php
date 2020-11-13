@@ -1,16 +1,18 @@
 <?php
 
 namespace frontend\controllers;
+
 use Yii;
 use frontend\models\Author;
+use yii\web\Controller;
 use frontend\controllers\behaviors\AccessBehavior;
 
-class AuthorController extends \yii\web\Controller
+class AuthorController extends Controller
 {
     public function behaviors()
     {
         return [
-            AccessBehavior::className(),            
+            AccessBehavior::class,
         ];
     }
     public function actionCreate()

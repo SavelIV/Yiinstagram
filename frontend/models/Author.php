@@ -2,6 +2,7 @@
 
 namespace frontend\models;
 
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "author".
@@ -12,7 +13,7 @@ namespace frontend\models;
  * @property string $birthdate
  * @property int $rating
  */
-class Author extends \yii\db\ActiveRecord
+class Author extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -52,7 +53,4 @@ class Author extends \yii\db\ActiveRecord
             'rating' => 'Rating',
         ];
     }
-    
-    
-
 }

@@ -21,7 +21,7 @@ class AccessBehavior extends Behavior
     public function checkAccess() {
         if (Yii::$app->user->isGuest) {
             Yii::$app->session->setFlash('error', 'You should be logged / registered.');
-            Yii::$app->controller->redirect(['site/index']);
+            Yii::$app->controller->redirect(['/user/default/login']);
             Yii::$app->end();
             
         }

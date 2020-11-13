@@ -10,14 +10,14 @@ class NewsletterController extends Controller
 {
     public function actionSubscribe()
     {
-        $formData = Yii::$app->request->post();
         $model = new Subscribe();
         
-        if (Yii::$app->request->isPost) {
-
-            $model->email = $formData['email'];
+        if ($model->load(Yii::$app->request->post())) {
             if ($model->validate() && $model->save()) {
-                Yii::$app->session->setFlash('success', 'Subscribe completed!');
+                Yii::$app->session->setFlash('success', 'Subscribe for ' . $model->email . ' completed!');
+            }
+            else {
+                Yii::$app->session->setFlash('error', 'This email: ' . $model->email. ' already exists!' );
             }
         }
 

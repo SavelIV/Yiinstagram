@@ -1,5 +1,6 @@
 <?php
 return [
+    'name' => 'Yiinstagram.saviv.site',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
@@ -11,6 +12,9 @@ return [
         ],
         'emailService' => [
             'class' => 'common\components\EmailService'
-        ]
+        ],
+        'storage' => [
+            'class' => 'common\components\Storage',
+        ],
     ],
 ];

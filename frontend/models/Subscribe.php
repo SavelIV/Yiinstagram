@@ -3,6 +3,7 @@
 
 namespace frontend\models;
 
+use console\models\Subscriber;
 use yii\base\Model;
 use Yii;
 
@@ -17,8 +18,9 @@ class Subscribe extends Model
    public function rules()
    {
        return [
-           [['email'],'required'],
-           [['email'],'email'],
+           ['email','required'],
+           ['email','email'],
+           ['email', 'unique', 'targetClass' => Subscriber::className(), 'message' => 'This email address has already been taken.'],
            
        ];
     }

@@ -10,6 +10,6 @@ class HighlightHelper {
     {
         $text = preg_quote($text);
         $words = explode(' ', trim($text));        
-        return preg_replace('/' . implode('|', $words) . '/i', '<b>$0</b>', $content);
+        return preg_replace('/' . implode('|', $words) . '/i', '<b class="yellow">$0</b>', $content);
     }
 }

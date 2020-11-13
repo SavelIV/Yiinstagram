@@ -4,12 +4,13 @@
 namespace console\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  *
  * @author Igor
  */
-class Subscriber {
+class Subscriber extends ActiveRecord {
     
     /**
      * Return all subscribers

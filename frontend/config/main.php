@@ -9,18 +9,25 @@ $params = array_merge(
 return [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
-    'language' => 'ru',
+    'language' => 'en-EN',
+    'bootstrap' => [
+        'log',
+        [
+            'class' => 'frontend\components\LanguageSelector',
+        ],
+    ],
     'controllerNamespace' => 'frontend\controllers',
     'modules' => [
         'user' => [
             'class' => 'frontend\modules\user\Module',
         ],
+        'post' => [
+            'class' => 'frontend\modules\post\Module',
+        ],
     ],
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-frontend',
-            'enableCsrfValidation' => true,
         ],
         'user' => [
             'identityClass' => 'frontend\models\User',
@@ -48,9 +55,21 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                '/' => 'site/index',
                 'news' => 'test/index',
                 'news/<id:\d+>' => 'test/view',
-                    
+                'profile/<nickname:[\w\-]+>' => 'user/profile/view',
+                'post/<id:\d+>' => 'post/default/view',
+            ],
+        ],
+        'feedService' => [
+            'class' => 'frontend\components\FeedService',
+        ],
+        'i18n' => [
+            'translations' => [
+                '*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                ],
             ],
         ],
         'stringHelper' => [
@@ -58,4 +77,7 @@ return [
         ],
     ],
     'params' => $params,
+    'aliases' => [
+        '@images' => '/files/photos',
+    ]
 ];

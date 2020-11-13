@@ -9,6 +9,7 @@ use frontend\models\Test;
 /**
  *
  * @author Igor
+ * @param int $showLimit
  */
 class NewsList extends Widget
 {

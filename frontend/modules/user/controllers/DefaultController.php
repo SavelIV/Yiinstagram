@@ -26,7 +26,7 @@ class DefaultController extends Controller
     {
         return [
             'access' => [
-                'class' => AccessControl::className(),
+                'class' => AccessControl::class,
                 'only' => ['logout', 'signup'],
                 'rules' => [
                     [
@@ -42,7 +42,7 @@ class DefaultController extends Controller
                 ],
             ],
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'logout' => ['post'],
                 ],
@@ -81,7 +81,7 @@ class DefaultController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            Yii::$app->session->setFlash('success', 'You have login successfully.');
+            Yii::$app->session->setFlash('success', 'Hello, '. Yii::$app->user->identity->username .'. You have login successfully.');
             return $this->goHome();
         } else {
             $model->password = '';

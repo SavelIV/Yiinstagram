@@ -6,6 +6,7 @@ use yii\helpers\Console;
 use console\models\News;
 use console\models\Subscriber;
 use console\models\Sender;
+use Yii;
 
 /**
  * @author Igor
@@ -13,13 +14,14 @@ use console\models\Sender;
 class MailerController extends \yii\console\Controller
 {
     /**
-     * Sending newsletter
+     * Sends newsletters
      */
     public function actionSend()
     {
-        $newsList = News::getList();
+        $maxNews = Yii::$app->params['maxNewsInList'];
+        $newsList = News::getList($maxNews);
         $subscribers = Subscriber::getList();
-        
+
         $count = Sender::run($subscribers,$newsList);
 
         Console::output("\nEmails sent: {$count}");
