@@ -232,3 +232,12 @@ a.desc:after {
     width: initial;
     height: 100%;
 }
+
+/*for likes heart*/
+.fa-heart-o {
+    color:red;
+}
+
+.likes-count {
+    margin-right: 15px;
+}

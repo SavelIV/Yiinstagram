@@ -72,11 +72,12 @@ class Feed extends \yii\db\ActiveRecord
 
     /**
      * @param \frontend\models\User $user
+     * @return boolean
      */
     public function isReported(User $user)
     {
         /* @var $redis Connection */
         $redis = Yii::$app->redis;
-        return $redis->sismember("post:{$this->post_id}:complaints", $user->getId());
+        return (bool) $redis->sismember("post:{$this->post_id}:complaints", $user->getId());
     }
 }

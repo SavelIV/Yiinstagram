@@ -35,9 +35,9 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_ACTIVE = 10;
     const USER_REGISTERED = 'user_registered';
     const DEFAULT_IMAGE = '/img/profile_default_image.jpg';
-    
+
     /**
-     * навешиваем обработчик EmailService из components на событие USER_REGISTERED
+     * {@inheritdoc}
      */
     public function init()
     {
@@ -346,8 +346,20 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
+     * Check whether current user follows user with given id
+     * @param int $userId
+     * @return boolean
+     */
+    public function isFollowUser(int $userId)
+    {
+        /* @var $redis Connection */
+        $redis = Yii::$app->redis;
+        return (bool) $redis->sismember("user:{$this->getId()}:subscriptions", $userId);
+    }
+
+    /**
      * Get post count
-     * @return integer
+     * @return int
      */
     public function getPostCount()
     {

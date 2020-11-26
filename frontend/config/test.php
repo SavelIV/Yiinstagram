@@ -6,7 +6,7 @@ return [
             'basePath' => __DIR__ . '/../web/assets',
         ],
         'urlManager' => [
-            'showScriptName' => true,
+            'showScriptName' => false,
         ],
         'request' => [
             'cookieValidationKey' => 'test',

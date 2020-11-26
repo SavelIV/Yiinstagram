@@ -2,7 +2,6 @@
 /* @var $this yii\web\View */
 /* @var $user frontend\models\User */
 /* @var $currentUser frontend\models\User */
-
 /* @var $modelPicture frontend\modules\user\models\forms\PictureForm */
 
 use yii\helpers\Url;
@@ -61,10 +60,10 @@ $this->title = Html::encode($user->username);
                             </div>
 
                             <?php if ($currentUser && !$currentUser->equals($user)): ?>
-                                <a href="<?php echo Url::to(['/user/profile/subscribe', 'id' => $user->getId()]); ?>"
-                                   class="btn btn-info">Subscribe</a>
                                 <a href="<?php echo Url::to(['/user/profile/unsubscribe', 'id' => $user->getId()]); ?>"
-                                   class="btn btn-info">Unsubscribe</a>
+                                   class="btn btn-info <?php echo ($currentUser && $currentUser->isFollowUser($user->getId())) ? "" : "display-none"; ?>">Unsubscribe</a>
+                                <a href="<?php echo Url::to(['/user/profile/subscribe', 'id' => $user->getId()]); ?>"
+                                   class="btn btn-info <?php echo ($currentUser && $currentUser->isFollowUser($user->getId())) ? "display-none" : ""; ?>">Subscribe</a>
                                 <hr>
                                 <h5>Friends, who are also following <?php echo Html::encode($user->username); ?>: </h5>
                                 <div class="row">
@@ -115,16 +114,11 @@ $this->title = Html::encode($user->username);
                                 <?php endforeach; ?>
                             </div>
                         </div>
-
-
                     </div>
-
                 </div>
             </div>
-
         </div>
     </div>
-
 
     <!-- Modal Following-->
     <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

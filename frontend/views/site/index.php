@@ -18,7 +18,8 @@ $this->title = Html::encode(Yii::$app->name);
 
     <div class="jumbotron">
         <h1>Welcome!</h1>
-        <h2>Hello,<?php if (Yii::$app->user->identity): ?>
+        <h2>Hello,
+        <?php if (Yii::$app->user->identity): ?>
             <div class="photo center-block">
                 <img id="profile-picture" class="author-image" src="<?php echo $currentUser->getPicture(); ?>"/>
             </div>
@@ -84,30 +85,33 @@ $this->title = Html::encode(Yii::$app->name);
                                             </a>
                                         </div>
                                         <div class="post-description">
-                                            <p><?php echo HtmlPurifier::process(Yii::$app->stringHelper->getShort($feedItem->post_description)); ?></p>
+                                            <p><?php echo HtmlPurifier::process(Yii::$app->stringHelper->getShort($feedItem->post_description)) . '...'; ?></p>
+                                        </div>
+                                        <div class="post-date">
+                                            <span><?php echo Yii::$app->formatter->asDatetime($feedItem->post_created_at); ?></span>
                                         </div>
                                         <div class="post-bottom">
                                             <div class="post-likes">
                                                 <i class="fa fa-lg fa-heart-o"></i>
                                                 <span class="likes-count"><?php echo $feedItem->countLikes(); ?></span>
                                                 &nbsp;&nbsp;&nbsp;
-                                                <a href="#"
-                                                   class="btn btn-danger button-unlike <?php echo ($currentUser->likesPost($feedItem->post_id)) ? "" : "display-none"; ?>"
-                                                   data-id="<?php echo $feedItem->post_id; ?>">
-                                                    Unlike&nbsp;&nbsp;<span
-                                                            class="glyphicon glyphicon-thumbs-down"></span>
-                                                </a>
-                                                <a href="#"
-                                                   class="btn btn-success button-like <?php echo ($currentUser->likesPost($feedItem->post_id)) ? "display-none" : ""; ?>"
-                                                   data-id="<?php echo $feedItem->post_id; ?>">
-                                                    Like&nbsp;&nbsp;<span class="glyphicon glyphicon-thumbs-up"></span>
-                                                </a>
+                                                <?php if ($currentUser && $currentUser['id'] != $feedItem['author_id']): ?>
+                                                    <a href="#"
+                                                       class="btn btn-danger button-unlike <?php echo ($currentUser->likesPost($feedItem->post_id)) ? "" : "display-none"; ?>"
+                                                       data-id="<?php echo $feedItem->post_id; ?>">
+                                                        Unlike&nbsp;&nbsp;<span
+                                                                class="glyphicon glyphicon-thumbs-down"></span>
+                                                    </a>
+                                                    <a href="#"
+                                                       class="btn btn-success button-like <?php echo ($currentUser->likesPost($feedItem->post_id)) ? "display-none" : ""; ?>"
+                                                       data-id="<?php echo $feedItem->post_id; ?>">
+                                                        Like&nbsp;&nbsp;<span
+                                                                class="glyphicon glyphicon-thumbs-up"></span>
+                                                    </a>
+                                                <?php endif; ?>
                                             </div>
                                             <div class="post-comments">
                                                 <a href="#">0 Comments</a>
-                                            </div>
-                                            <div class="post-date">
-                                                <span><?php echo Yii::$app->formatter->asDatetime($feedItem->post_created_at); ?></span>
                                             </div>
                                             <div class="post-report">
                                                 <?php if (!$feedItem->isReported($currentUser)): ?>

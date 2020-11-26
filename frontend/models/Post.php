@@ -3,7 +3,6 @@
 namespace frontend\models;
 
 use Yii;
-use frontend\models\User;
 
 /**
  * This is the model class for table "post".
@@ -94,13 +93,24 @@ class Post extends \yii\db\ActiveRecord
     /**
      * Check whether given user liked current post
      * @param \frontend\models\User $user
-     * @return integer
+     * @return boolean
      */
     public function isLikedBy(User $user)
     {
         /* @var $redis Connection */
         $redis = Yii::$app->redis;
-        return $redis->sismember("post:{$this->getId()}:likes", $user->getId());
+        return (bool) $redis->sismember("post:{$this->getId()}:likes", $user->getId());
+    }
+
+    /**
+     * @param \frontend\models\User $user
+     * @return boolean
+     */
+    public function isReported(User $user)
+    {
+        /* @var $redis Connection */
+        $redis = Yii::$app->redis;
+        return (bool) $redis->sismember("post:{$this->id}:complaints", $user->getId());
     }
 
 }

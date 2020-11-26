@@ -21,6 +21,6 @@ class StringHelper {
         if ($limit === null){
             $limit = $this->limit;
         }
-        return substr($string,0,$limit);
+        return mb_substr($string,0,$limit,'UTF-8');
     }
 }

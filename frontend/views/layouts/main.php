@@ -52,50 +52,52 @@ FontAwesomeAsset::register($this);
         </div>
         <div class="header-main-nav custom navbar navbar-default">
             <div class="container">
-                <nav class="main-menu">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse"
-                                data-target="#bs-example-navbar-collapse-1">
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                    </div>
-                    <?php
-                    $menuItems = [
-                        ['label' => Yii::t('menu', 'Home'), 'url' => ['/site/index']],
-                        ['label' => Yii::t('menu', 'About'), 'url' => ['/site/about']],
-                        ['label' => Yii::t('menu', 'Contact'), 'url' => ['/site/contact']],
-                    ];
-                    if (Yii::$app->user->isGuest) {
-                        $menuItems[] = ['label' => Yii::t('menu', 'Register'), 'url' => ['/user/default/signup']];
-                        $menuItems[] = ['label' => Yii::t('menu', 'Login'), 'url' => ['/user/default/login']];
-                    } else {
-                        $menuItems[] = ['label' => Yii::t('menu', 'Profile actions'),
-                            'items' => [
-                                ['label' => '<i class="fa fa-angle-double-right"></i> ' . Yii::t('menu', 'My profile'), 'url' => ['/user/profile/view', 'nickname' => Yii::$app->user->identity->getNickname()]],
-                                ['label' => '<i class="fa fa-angle-double-right"></i> ' . Yii::t('menu', 'Newsfeed'), 'url' => ['/site/newsfeed']],
-                                ['label' => '<i class="fa fa-angle-double-right"></i> ' . Yii::t('menu', 'Create post'), 'url' => ['/post/default/create']],
-                            ],
+                <div class="content-center">
+                    <nav class="main-menu">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                                    data-target="#bs-example-navbar-collapse-1">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                        </div>
+                        <?php
+                        $menuItems = [
+                            ['label' => Yii::t('menu', 'Home'), 'url' => ['/site/index']],
+                            ['label' => Yii::t('menu', 'About'), 'url' => ['/site/about']],
+                            ['label' => Yii::t('menu', 'Contact'), 'url' => ['/site/contact']],
                         ];
-                        $menuItems[] = '<li>'
-                            . Html::beginForm(['/user/default/logout'], 'post')
-                            . Html::submitButton(
-                                Yii::t('menu', 'Logout ({username})', [
-                                    'username' => Yii::$app->user->identity->username
-                                ]) . ' <i class="fa fa-sign-out"></i>', ['class' => 'btn btn-link logout']
-                            )
-                            . Html::endForm()
-                            . '</li>';
-                    }
-                    echo Nav::widget([
-                        'options' => ['class' => 'menu navbar-nav collapse navbar-collapse', 'id' => "bs-example-navbar-collapse-1"],
-                        'activateParents' => true,
-                        'encodeLabels' => false,
-                        'items' => $menuItems,
-                    ]);
-                    ?>
-                </nav>
+                        if (Yii::$app->user->isGuest) {
+                            $menuItems[] = ['label' => Yii::t('menu', 'Register'), 'url' => ['/user/default/signup']];
+                            $menuItems[] = ['label' => Yii::t('menu', 'Login'), 'url' => ['/user/default/login']];
+                        } else {
+                            $menuItems[] = ['label' => Yii::t('menu', 'Profile actions'),
+                                'items' => [
+                                    ['label' => '<i class="fa fa-angle-double-right"></i> ' . Yii::t('menu', 'My profile'), 'url' => ['/user/profile/view', 'nickname' => Yii::$app->user->identity->getNickname()]],
+                                    ['label' => '<i class="fa fa-angle-double-right"></i> ' . Yii::t('menu', 'Newsfeed'), 'url' => ['/site/newsfeed']],
+                                    ['label' => '<i class="fa fa-angle-double-right"></i> ' . Yii::t('menu', 'Create post'), 'url' => ['/post/default/create']],
+                                ],
+                            ];
+                            $menuItems[] = '<li>'
+                                . Html::beginForm(['/user/default/logout'], 'post')
+                                . Html::submitButton(
+                                    Yii::t('menu', 'Logout ({username})', [
+                                        'username' => Yii::$app->user->identity->username
+                                    ]) . ' <i class="fa fa-sign-out"></i>', ['class' => 'btn btn-link logout']
+                                )
+                                . Html::endForm()
+                                . '</li>';
+                        }
+                        echo Nav::widget([
+                            'options' => ['class' => 'menu navbar-nav collapse navbar-collapse', 'id' => "bs-example-navbar-collapse-1"],
+                            'activateParents' => true,
+                            'encodeLabels' => false,
+                            'items' => $menuItems,
+                        ]);
+                        ?>
+                    </nav>
+                </div>
             </div>
         </div>
     </header>
@@ -103,7 +105,8 @@ FontAwesomeAsset::register($this);
         <?= Alert::widget() ?>
         <?= $content ?>
     </div>
-    <div class="push"></div> // to push footer to bottom
+    <!--   to push footer to bottom-->
+    <div class="push"></div>
 </div>
 <footer>
     <div class="footer">

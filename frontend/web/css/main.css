@@ -43,6 +43,10 @@ header .header-top .navicons-topbar ul {
     float: right;
 }
 
+header .header-top .navicons-topbar ul select {
+    padding: 3px;
+}
+
 header .header-top ul {
     display: inline-block;
     margin: 40px 0 0;
@@ -103,6 +107,11 @@ header .header-top .brand-logo h1 span {
     border-top: 1px solid;
     border-color: #ececec;
     margin-bottom: 30px;
+}
+
+.content-center {
+    display: flex;
+    justify-content: center;
 }
 
 .header-main-nav .main-menu ul li a:hover,
@@ -188,9 +197,13 @@ header .header-top .brand-logo h1 span {
 .blog-posts .post .post-bottom {
     position: relative;
     border-bottom: 1px solid #ececec;
+    padding-bottom: 5px;
 }
 
-.blog-posts .post .post-likes, .blog-posts .post .post-bottom .post-likes a, .post .post-description, .post-report {
+.blog-posts .post .post-likes,
+.blog-posts .post .post-bottom .post-likes a,
+.post .post-description,
+.post-report a {
     display: inline;
     font-family: 'Ubuntu', sans-serif;
     font-size: 13px;
@@ -202,20 +215,24 @@ header .header-top .brand-logo h1 span {
     display: none;
 }
 
-.blog-posts .post .post-bottom .post-comments, .post-report {
+.blog-posts .post .post-bottom .post-comments{
     position: relative;
     display: inline-block;
     border-left: 1px solid #ececec;
     border-right: 1px solid #ececec;
-    padding: 0px 15px 10px;
+    padding: 0px 5px 10px;
     margin: 0 10px;
 }
 
-.blog-posts .post .post-bottom .post-date {
+.blog-posts .post .post-date {
     position: relative;
     font-family: 'Ubuntu', sans-serif;
-    display: inline-block;
+    display: block;
     font-size: 13px;
+}
+
+.post-date {
+    padding: 15px 0 ;
 }
 
 .post-report {
@@ -223,7 +240,7 @@ header .header-top .brand-logo h1 span {
     font-family: 'Ubuntu', sans-serif;
     display: inline-block;
     font-size: 13px;
-    border-left: 1px solid #ececec;
+    border-left: 0;
     border-right: 0;
 }
 
@@ -499,6 +516,15 @@ footer, .push {
 }
 
 /* navbar toggle */
+@media (min-width: 420px) {
+
+    .navbar-header {
+        float: none;
+        display: flex;
+        justify-content: center;
+    }
+}
+
 @media (min-width: 768px) {
 
     .custom .collapse.navbar-collapse {
@@ -514,6 +540,8 @@ footer, .push {
 
     .navbar-header {
         float: none;
+        display: flex;
+        justify-content: center;
     }
     .navbar-toggle {
         display: block;
@@ -527,11 +555,14 @@ footer, .push {
         visibility: visible !important;
     }
 
-    .navbar-header {
-        float: left;
-    }
-
     .navbar-toggle {
         display: none;
+    }
+}
+
+@media (max-width: 991px) {
+    .nav > li {
+        float: none;
+        text-align: center;
     }
 }

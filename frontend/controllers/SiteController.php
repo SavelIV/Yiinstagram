@@ -13,8 +13,8 @@ use frontend\models\User;
  */
 class SiteController extends Controller
 {
-    const FEED_POSTS_LIMIT = 3;
-    const ACTIVE_USERS_LIMIT = 8;
+    const FEED_POSTS_LIMIT = 20;
+    const ACTIVE_USERS_LIMIT = 11;
 
     /**
      * {@inheritdoc}
