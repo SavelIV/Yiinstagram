@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use Yii;
+use frontend\models\User;
 
 /**
  * This is the model class for table "post".
@@ -53,7 +54,7 @@ class Post extends \yii\db\ActiveRecord
 
     /**
      * Like current post by given user
-     * @param \frontend\models\User $user
+     * @param User $user
      */
     public function like(User $user)
     {
@@ -65,7 +66,7 @@ class Post extends \yii\db\ActiveRecord
 
     /**
      * Unlike current post by given user
-     * @param \frontend\models\User $user
+     * @param User $user
      */
     public function unLike(User $user)
     {
@@ -92,7 +93,7 @@ class Post extends \yii\db\ActiveRecord
 
     /**
      * Check whether given user liked current post
-     * @param \frontend\models\User $user
+     * @param User $user
      * @return boolean
      */
     public function isLikedBy(User $user)
@@ -103,7 +104,8 @@ class Post extends \yii\db\ActiveRecord
     }
 
     /**
-     * @param \frontend\models\User $user
+     * Add complaint to post from given user
+     * @param User $user
      * @return boolean
      */
     public function isReported(User $user)

@@ -293,6 +293,7 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
+     * Check whether current user has mutual subscriptions with given user
      * @param \frontend\models\User $user
      * @return array
      */
@@ -334,11 +335,11 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * Check whether current user likes post with given id
+     * Check whether current user liked post with given id
      * @param int $postId
      * @return boolean
      */
-    public function likesPost(int $postId)
+    public function isLikedPost(int $postId)
     {
         /* @var $redis Connection */
         $redis = Yii::$app->redis;

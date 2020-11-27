@@ -102,6 +102,29 @@ class DefaultController extends Controller
         ];
     }
 
+    public function actionComplain()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        $id = Yii::$app->request->post('id');
+
+        /* @var $currentUser User */
+        $currentUser = Yii::$app->user->identity;
+        $post = $this->findPost($id);
+
+        if ($post->complain($currentUser)) {
+            return [
+                'success' => true,
+                'text' => 'Post reported!'
+            ];
+        }
+        return [
+            'success' => false,
+            'text' => 'Error',
+        ];
+    }
+
+
     /**
      * @param integer $id
      * @return Post

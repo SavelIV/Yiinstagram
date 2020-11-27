@@ -51,7 +51,7 @@ class ProfileController extends Controller {
         if ($model->validate()) {
 
             $user = Yii::$app->user->identity;
-            $user->picture = Yii::$app->storage->saveUploadedFile($model->picture); // 15/27/30379e706840f951d22de02458a4788eb55f.jpg
+            $user->picture = Yii::$app->storage->saveUploadedFile($model->picture);
 
             if ($user->save(false, ['picture'])) {
                 return [
@@ -68,7 +68,7 @@ class ProfileController extends Controller {
      * @return User
      * @throws NotFoundHttpException
      */
-    public function findUser($nickname)
+    private function findUser($nickname)
     {
         if ($user = User::find()->where(['nickname' => $nickname])->orWhere(['id' => $nickname])->one()) {
             return $user;
@@ -111,7 +111,7 @@ class ProfileController extends Controller {
      * @return User
      * @throws NotFoundHttpException
      */
-    public function findUserById($id)
+    private function findUserById($id)
     {
         if ($user = User::findOne($id)) {
             return $user;

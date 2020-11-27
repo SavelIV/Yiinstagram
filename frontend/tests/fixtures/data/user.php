@@ -21,7 +21,7 @@ return [
         'id' => 4,
         'username' => 'Prof. Adele McDermott PhD',
         'auth_key' => 'LUvQM_UYoOj5axONSGaQa5ZWKz76688L',
-        'password_hash' => '$2y$13$MpgVgEZQGC1T7oX5t17UfuTVxsb6.43D6dYf0LeK.EP74/rF1FFiu',
+        'password_hash' => '$2y$13$MpgVgEZQGC1T7oX5t17UfuTVxsb6.43D6dYf0LeK.EP74/rF1FFiu', //111111
         'password_reset_token' => NULL,
         'email' => 'aliya43@yahoo.com',
         'status' => 10,

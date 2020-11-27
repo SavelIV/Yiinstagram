@@ -54,13 +54,13 @@ $this->title = 'Newsfeed';
                                             &nbsp;&nbsp;&nbsp;
                                             <?php if ($currentUser && $currentUser['id'] != $feedItem['author_id']): ?>
                                                 <a href="#"
-                                                   class="btn btn-danger button-unlike <?php echo ($currentUser->likesPost($feedItem->post_id)) ? "" : "display-none"; ?>"
+                                                   class="btn btn-danger button-unlike <?php echo ($currentUser->isLikedPost($feedItem->post_id)) ? "" : "display-none"; ?>"
                                                    data-id="<?php echo $feedItem->post_id; ?>">
                                                     Unlike&nbsp;&nbsp;<span
                                                             class="glyphicon glyphicon-thumbs-down"></span>
                                                 </a>
                                                 <a href="#"
-                                                   class="btn btn-success button-like <?php echo ($currentUser->likesPost($feedItem->post_id)) ? "display-none" : ""; ?>"
+                                                   class="btn btn-success button-like <?php echo ($currentUser->isLikedPost($feedItem->post_id)) ? "display-none" : ""; ?>"
                                                    data-id="<?php echo $feedItem->post_id; ?>">
                                                     Like&nbsp;&nbsp;<span class="glyphicon glyphicon-thumbs-up"></span>
                                                 </a>
@@ -103,6 +103,6 @@ $this->title = 'Newsfeed';
 $this->registerJsFile('@web/js/likes.js', [
     'depends' => JqueryAsset::class,
 ]);
-//$this->registerJsFile('@web/js/complaints.js', [
-//    'depends' => JqueryAsset::class,
-//]);
+$this->registerJsFile('@web/js/complaints.js', [
+    'depends' => JqueryAsset::class,
+]);

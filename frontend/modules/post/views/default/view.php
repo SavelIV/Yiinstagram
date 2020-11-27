@@ -79,7 +79,12 @@ $this->title = Html::encode($post->user->username) . '`s post';
     </div>
 
 <?php
-$this->registerJsFile('@web/js/bs3-tooltips-and-popovers.js', ['depends' => JqueryAsset::class,]);
+$this->registerJsFile('@web/js/bs3-tooltips-and-popovers.js', [
+    'depends' => JqueryAsset::class,
+]);
 $this->registerJsFile('@web/js/likes.js', [
+    'depends' => JqueryAsset::class,
+]);
+$this->registerJsFile('@web/js/complaints.js', [
     'depends' => JqueryAsset::class,
 ]);

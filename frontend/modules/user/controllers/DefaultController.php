@@ -115,7 +115,7 @@ class DefaultController extends Controller
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post()) && $user = $model->signup()) {
             Yii::$app->user->login($user);
-            Yii::$app->session->setFlash('success', 'New User registered. Thank you for registration.');
+            Yii::$app->session->setFlash('success', 'New User '. Yii::$app->user->identity->username .' registered. Thank you for registration.');
             return $this->goHome();
         }
 
