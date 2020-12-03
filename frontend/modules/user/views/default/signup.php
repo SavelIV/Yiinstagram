@@ -8,7 +8,7 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
-$this->title = 'Register';
+$this->title = Html::encode(Yii::t('login', 'Register'));
 
 ?>
 <div class="site-signup">
@@ -16,7 +16,7 @@ $this->title = 'Register';
         <div class="col-lg-6">
             <h1><?= Html::encode($this->title) ?></h1>
 
-            <p>Please fill out the following fields to register:</p>
+            <p><?php echo Yii::t('login', 'Please fill out the following fields to register:'); ?></p>
 
             <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
 
@@ -27,13 +27,13 @@ $this->title = 'Register';
             <?= $form->field($model, 'password')->passwordInput() ?>
 
             <div class="form-group">
-                <?= Html::submitButton('Signup', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
+                <?= Html::submitButton(Yii::t('login', 'Register'), ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
             </div>
 
             <?php ActiveForm::end(); ?>
         </div>
         <div class="col-lg-4">
-            <h3 class="text-center">Or register with:</h3><br>
+            <h3 class="text-center"><?php echo Yii::t('login', 'Or register with:'); ?></h3><br>
             <?php
 
             use yii\authclient\widgets\AuthChoice; ?>

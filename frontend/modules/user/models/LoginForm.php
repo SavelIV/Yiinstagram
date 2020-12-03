@@ -16,6 +16,14 @@ class LoginForm extends Model
 
     private $_user;
 
+    public function attributeLabels()
+    {
+        return [
+            'email' => Yii::t('login', 'Email'),
+            'password' => Yii::t('login', 'Password'),
+            'rememberMe' => Yii::t('login', 'Remember Me'),
+        ];
+    }
 
     /**
      * {@inheritdoc}
@@ -45,7 +53,7 @@ class LoginForm extends Model
         if (!$this->hasErrors()) {
             $user = $this->getUser();
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, 'Incorrect email or password.');
+                $this->addError($attribute, Yii::t('login',  'Incorrect email or password.'));
             }
         }
     }

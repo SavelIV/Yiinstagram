@@ -5,12 +5,12 @@
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 
-$this->title = 'Create post';
+$this->title = Html::encode(Yii::t('create', 'Create post'));
 ?>
 
 <div class="post-default-index">
 
-    <h1>Create post</h1>
+    <h1><?php echo Yii::t('create', 'Create post'); ?></h1>
 
     <?php $form = ActiveForm::begin(); ?>
 
@@ -18,7 +18,7 @@ $this->title = 'Create post';
 
     <?php echo $form->field($model, 'description'); ?>
 
-    <?php echo Html::submitButton('Create'); ?>
+    <?php echo Html::submitButton(Yii::t('create', 'Create post')); ?>
 
     <?php ActiveForm::end(); ?>
 

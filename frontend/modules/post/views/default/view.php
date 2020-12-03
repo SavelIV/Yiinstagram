@@ -1,7 +1,6 @@
 <?php
 /* @var $this yii\web\View */
 /* @var $currentUser frontend\models\User */
-
 /* @var $post frontend\models\Post */
 
 use yii\helpers\Html;
@@ -9,7 +8,9 @@ use yii\web\JqueryAsset;
 use yii\helpers\Url;
 use yii\helpers\HtmlPurifier;
 
-$this->title = Html::encode($post->user->username) . '`s post';
+$this->title = Html::encode(Yii::t('post', '{username}`s post', [
+    'username' => $post->user->username
+]));
 ?>
     <div class="page page-post blog-posts">
         <div class="post post-default-index">
@@ -40,8 +41,10 @@ $this->title = Html::encode($post->user->username) . '`s post';
             </div>
 
             <hr>
-            <div class="alert alert-success display-none fade in" id="liked-success">Liked!</div>
-            <div class="alert alert-danger display-none fade in" id="unliked-success">Unliked!</div>
+            <div class="alert alert-success display-none fade in" id="liked-success"><?php echo Yii::t('post', 'Liked!'); ?></div>
+            <div class="alert alert-danger display-none fade in" id="unliked-success"><?php echo Yii::t('post', 'Unliked!'); ?></div>
+            <div class="alert alert-info display-none fade in" id="reported-success"><?php echo Yii::t('post', 'Post has been reported!'); ?></div>
+            <div class="alert alert-warning display-none fade in" id="unreported-success"><?php echo Yii::t('post', 'Undone!'); ?></div>
 
             <div class="post-bottom">
                 <div class="post-likes">
@@ -51,29 +54,37 @@ $this->title = Html::encode($post->user->username) . '`s post';
                         <a href="#" class="btn btn-danger button-unlike
         <?php echo ($currentUser && $post->isLikedBy($currentUser)) ? "" : "display-none"; ?>"
                            data-id="<?php echo $post->id; ?>">
-                            Unlike&nbsp;&nbsp;<span class="glyphicon glyphicon-thumbs-down"></span>
+                            <?php echo Yii::t('home', 'Unlike'); ?>&nbsp;&nbsp;<span class="glyphicon glyphicon-thumbs-down"></span>
                         </a>
                         <a href="#" class="btn btn-success button-like
        <?php echo ($currentUser && $post->isLikedBy($currentUser)) ? "display-none" : ""; ?>"
                            data-id="<?php echo $post->id; ?>">
-                            Like&nbsp;&nbsp;<span class="glyphicon glyphicon-thumbs-up"></span>
+                            <?php echo Yii::t('home', 'Like'); ?>&nbsp;&nbsp;<span class="glyphicon glyphicon-thumbs-up"></span>
                         </a>
                     <?php endif; ?>
                 </div>
                 <div class="post-comments">
-                    <a href="#">0 Comments</a>
+                    <a href="#">0 <?php echo Yii::t('home', 'Comments'); ?></a>
                 </div>
-                <div class="post-report">
-                    <?php if (!$post->isReported($currentUser)): ?>
-                        <a href="#" class="btn btn-default button-complain"
+                <?php if ($currentUser && !$currentUser->equals($post->user)): ?>
+                    <div class="post-report">
+                        <span class="text-danger <?php echo ($post->isReported($currentUser)) ? "" : "display-none"; ?>">
+                            <?php echo Yii::t('home', 'Post has been reported!'); ?>
+                        </span>
+                        <a href="#"
+                           class="btn btn-default button-complain <?php echo ($post->isReported($currentUser)) ? "display-none" : ""; ?>"
                            data-id="<?php echo $post->id; ?>">
-                            Report post <i class="fa fa-cog fa-spin fa-fw icon-preloader"
-                                           style="display:none"></i>
+                            <?php echo Yii::t('home', 'Report post'); ?>
+                            <i class="fa fa-cog fa-spin fa-fw icon-preloader" style="display:none"></i>
                         </a>
-                    <?php else: ?>
-                        <p>Post has been reported</p>
-                    <?php endif; ?>
-                </div>
+                        <a href="#"
+                           class="btn btn-default button-undo <?php echo ($post->isReported($currentUser)) ? "" : "display-none"; ?>"
+                           data-id="<?php echo $post->id; ?>">
+                            <?php echo Yii::t('home', 'Undo'); ?>
+                            <i class="fa fa-cog fa-spin fa-fw icon-preloader" style="display:none"></i>
+                        </a>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
     </div>

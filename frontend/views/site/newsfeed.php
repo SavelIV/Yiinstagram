@@ -9,7 +9,7 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\helpers\HtmlPurifier;
 
-$this->title = 'Newsfeed';
+$this->title =  Html::encode(Yii::t('menu', 'Newsfeed'));
 ?>
 
     <div class="page-posts no-padding">
@@ -56,29 +56,35 @@ $this->title = 'Newsfeed';
                                                 <a href="#"
                                                    class="btn btn-danger button-unlike <?php echo ($currentUser->isLikedPost($feedItem->post_id)) ? "" : "display-none"; ?>"
                                                    data-id="<?php echo $feedItem->post_id; ?>">
-                                                    Unlike&nbsp;&nbsp;<span
+                                                    <?php echo Yii::t('home', 'Unlike'); ?>&nbsp;&nbsp;<span
                                                             class="glyphicon glyphicon-thumbs-down"></span>
                                                 </a>
                                                 <a href="#"
                                                    class="btn btn-success button-like <?php echo ($currentUser->isLikedPost($feedItem->post_id)) ? "display-none" : ""; ?>"
                                                    data-id="<?php echo $feedItem->post_id; ?>">
-                                                    Like&nbsp;&nbsp;<span class="glyphicon glyphicon-thumbs-up"></span>
+                                                    <?php echo Yii::t('home', 'Like'); ?>&nbsp;&nbsp;<span class="glyphicon glyphicon-thumbs-up"></span>
                                                 </a>
                                             <?php endif; ?>
                                         </div>
                                         <div class="post-comments">
-                                            <a href="#">0 Comments</a>
+                                            <a href="#">0 <?php echo Yii::t('home', 'Comments'); ?></a>
                                         </div>
                                         <div class="post-report">
-                                            <?php if (!$feedItem->isReported($currentUser)): ?>
-                                                <a href="#" class="btn btn-default button-complain"
-                                                   data-id="<?php echo $feedItem->post_id; ?>">
-                                                    Report post <i class="fa fa-cog fa-spin fa-fw icon-preloader"
-                                                                   style="display:none"></i>
-                                                </a>
-                                            <?php else: ?>
-                                                <p>Post has been reported</p>
-                                            <?php endif; ?>
+                                            <span class="text-danger <?php echo ($feedItem->isReported($currentUser)) ? "" : "display-none"; ?>">
+                                                <?php echo Yii::t('home', 'Post has been reported!'); ?>
+                                            </span>
+                                            <a href="#"
+                                               class="btn btn-default button-complain <?php echo ($feedItem->isReported($currentUser)) ? "display-none" : ""; ?>"
+                                               data-id="<?php echo $feedItem->post_id; ?>">
+                                                <?php echo Yii::t('home', 'Report post'); ?> <i class="fa fa-cog fa-spin fa-fw icon-preloader"
+                                                               style="display:none"></i>
+                                            </a>
+                                            <a href="#"
+                                               class="btn btn-default button-undo <?php echo ($feedItem->isReported($currentUser)) ? "" : "display-none"; ?>"
+                                               data-id="<?php echo $feedItem->post_id; ?>">
+                                                <?php echo Yii::t('home', 'Undo'); ?> <i class="fa fa-cog fa-spin fa-fw icon-preloader"
+                                                        style="display:none"></i>
+                                            </a>
                                         </div>
                                     </div>
                                 </article>
@@ -88,7 +94,7 @@ $this->title = 'Newsfeed';
 
                         <?php else: ?>
                             <div class="col-md-12">
-                                Nobody posted yet!
+                                <?php echo Yii::t('home', 'None of Your friends posted yet!'); ?>
                             </div>
                         <?php endif; ?>
 

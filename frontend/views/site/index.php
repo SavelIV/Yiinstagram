@@ -17,32 +17,34 @@ $this->title = Html::encode(Yii::$app->name);
 ?>
 
     <div class="jumbotron">
-        <h1>Welcome!</h1>
-        <h2>Hello,
+        <h1><?php echo Yii::t('home', 'Welcome!'); ?></h1>
+        <h2><?php echo Yii::t('home', 'Hello, '); ?>
         <?php if (Yii::$app->user->identity): ?>
             <div class="photo center-block">
                 <img id="profile-picture" class="author-image" src="<?php echo $currentUser->getPicture(); ?>"/>
             </div>
             <?php echo Yii::$app->user->identity->username; ?></h2>
-        <p class="lead">Nice to see You.</p>
+        <p class="lead"><?php echo Yii::t('home', 'Nice to see You.'); ?></p>
         <?php else: ?>
-            <?php echo "user. Please register or login to see all features."; ?></h2>
+            <?php echo Yii::t('home', 'user. Please register or login to see all features.'); ?></h2>
         <?php endif; ?>
 
-        <p><a class="btn btn-lg btn-success" href="<?php echo Url::to(['newsletter/subscribe']); ?>">Subscribe to
-                Newsletters</a></p>
+        <p><a class="btn btn-lg btn-success" href="<?php echo Url::to(['newsletter/subscribe']); ?>">
+                <?php echo Yii::t('home', 'Subscribe to Newsletters'); ?>
+            </a>
+        </p>
     </div>
 
     <div class="body-content">
 
         <div class="row">
             <div class="col-lg-4 text-center">
-                <h2>Last News:</h2>
+                <h2><?php echo Yii::t('home', 'Last News:'); ?></h2>
                 <hr>
                 <?php echo NewsList::widget(['showLimit' => 12]); ?>
             </div>
             <div class="col-lg-4 text-center">
-                <h2>Most active users:</h2>
+                <h2><?php echo Yii::t('home', 'Most active users:'); ?></h2>
                 <hr>
                 <?php foreach ($users as $user): ?>
                     <div class="photo center-block">
@@ -56,7 +58,7 @@ $this->title = Html::encode(Yii::$app->name);
                 <?php endforeach; ?>
             </div>
             <div class="col-lg-4 text-center">
-                <h2>Last Posts:</h2>
+                <h2><?php echo Yii::t('home', 'Last Posts:'); ?></h2>
                 <?php if (Yii::$app->user->identity): ?>
                     <hr>
                     <?php if ($feedItems): ?>
@@ -99,30 +101,36 @@ $this->title = Html::encode(Yii::$app->name);
                                                     <a href="#"
                                                        class="btn btn-danger button-unlike <?php echo ($currentUser->isLikedPost($feedItem->post_id)) ? "" : "display-none"; ?>"
                                                        data-id="<?php echo $feedItem->post_id; ?>">
-                                                        Unlike&nbsp;&nbsp;<span
+                                                        <?php echo Yii::t('home', 'Unlike'); ?>&nbsp;&nbsp;<span
                                                                 class="glyphicon glyphicon-thumbs-down"></span>
                                                     </a>
                                                     <a href="#"
                                                        class="btn btn-success button-like <?php echo ($currentUser->isLikedPost($feedItem->post_id)) ? "display-none" : ""; ?>"
                                                        data-id="<?php echo $feedItem->post_id; ?>">
-                                                        Like&nbsp;&nbsp;<span
+                                                        <?php echo Yii::t('home', 'Like'); ?>&nbsp;&nbsp;<span
                                                                 class="glyphicon glyphicon-thumbs-up"></span>
                                                     </a>
                                                 <?php endif; ?>
                                             </div>
                                             <div class="post-comments">
-                                                <a href="#">0 Comments</a>
+                                                <a href="#">0 <?php echo Yii::t('home', 'Comments'); ?></a>
                                             </div>
                                             <div class="post-report">
-                                                <?php if (!$feedItem->isReported($currentUser)): ?>
-                                                    <a href="#" class="btn btn-default button-complain"
-                                                       data-id="<?php echo $feedItem->post_id; ?>">
-                                                        Report post <i class="fa fa-cog fa-spin fa-fw icon-preloader"
-                                                                       style="display:none"></i>
-                                                    </a>
-                                                <?php else: ?>
-                                                    <p>Post has been reported</p>
-                                                <?php endif; ?>
+                                                <span class="text-danger <?php echo ($feedItem->isReported($currentUser)) ? "" : "display-none"; ?>">
+                                                    <?php echo Yii::t('home', 'Post has been reported!'); ?>
+                                                </span>
+                                                <a href="#"
+                                                   class="btn btn-default button-complain <?php echo ($feedItem->isReported($currentUser)) ? "display-none" : ""; ?>"
+                                                   data-id="<?php echo $feedItem->post_id; ?>">
+                                                    <?php echo Yii::t('home', 'Report post'); ?>
+                                                    <i class="fa fa-cog fa-spin fa-fw icon-preloader" style="display:none"></i>
+                                                </a>
+                                                <a href="#"
+                                                   class="btn btn-default button-undo <?php echo ($feedItem->isReported($currentUser)) ? "" : "display-none"; ?>"
+                                                   data-id="<?php echo $feedItem->post_id; ?>">
+                                                    <?php echo Yii::t('home', 'Undo'); ?>
+                                                    <i class="fa fa-cog fa-spin fa-fw icon-preloader" style="display:none"></i>
+                                                </a>
                                             </div>
                                         </div>
                                     </article>
@@ -133,17 +141,17 @@ $this->title = Html::encode(Yii::$app->name);
 
                     <?php else: ?>
                         <div class="text-center">
-                            None of Your friends posted yet!
+                            <?php echo Yii::t('home', 'None of Your friends posted yet!'); ?>
                         </div>
                     <?php endif; ?>
 
                 <?php else: ?>
-                    <p>seen after login.</p>
-                    <h2>Search</h2>
+                    <p><?php echo Yii::t('home', 'seen after login.'); ?></p>
+                    <h2><?php echo Yii::t('home', 'Search'); ?></h2>
                     <hr>
-                    <a href="<?php echo Url::to(['search/index']); ?>">Full Text Search</a>
+                    <a href="<?php echo Url::to(['search/index']); ?>"><?php echo Yii::t('home', 'Full Text Search'); ?></a>
                     <hr>
-                    <a href="<?php echo Url::to(['search/advanced']); ?>">Sphinx Search</a>
+                    <a href="<?php echo Url::to(['search/advanced']); ?>"><?php echo Yii::t('home', 'Sphinx Search'); ?></a>
                 <?php endif; ?>
 
             </div>

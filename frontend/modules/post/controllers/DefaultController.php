@@ -115,15 +115,36 @@ class DefaultController extends Controller
         if ($post->complain($currentUser)) {
             return [
                 'success' => true,
-                'text' => 'Post reported!'
+                'text' =>  Yii::t('home', 'Post has been reported!'),
             ];
         }
         return [
             'success' => false,
-            'text' => 'Error',
+            'text' => Yii::t('home', 'Error'),
         ];
     }
 
+    public function actionUncomplain()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        $id = Yii::$app->request->post('id');
+
+        /* @var $currentUser User */
+        $currentUser = Yii::$app->user->identity;
+        $post = $this->findPost($id);
+
+        if ($post->unComplain($currentUser)) {
+            return [
+                'success' => true,
+                'text' => Yii::t('home', 'Undone!'),
+            ];
+        }
+        return [
+            'success' => false,
+            'text' => Yii::t('home', 'Error'),
+        ];
+    }
 
     /**
      * @param integer $id

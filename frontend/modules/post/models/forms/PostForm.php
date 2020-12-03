@@ -20,6 +20,15 @@ class PostForm extends Model
 
     private $user;
 
+
+    public function attributeLabels()
+    {
+        return [
+            'picture' => Yii::t('create', 'Picture'),
+            'description' => Yii::t('create', 'Description'),
+        ];
+    }
+
     /**
      * @inheritdoc
      */
@@ -55,12 +64,12 @@ class PostForm extends Model
 
         $manager = new ImageManager(array('driver' => 'imagick'));
 
-        $image = $manager->make($this->picture->tempName);     //    /tmp/11ro51
+        $image = $manager->make($this->picture->tempName);
 
         $image->resize($width, $height, function ($constraint) {
             $constraint->aspectRatio();
             $constraint->upsize();
-        })->save($this->picture->tempName . '.' . $file->extension);        //    /tmp/11ro51
+        })->save($this->picture->tempName . '.' . $this->picture->extension);
     }
 
     /**

@@ -16,6 +16,15 @@ class SignupForm extends Model {
     public $email;
     public $password;
 
+    public function attributeLabels()
+    {
+        return [
+            'username' => Yii::t('login', 'Username'),
+            'email' => Yii::t('login', 'Email'),
+            'password' => Yii::t('login', 'Password'),
+        ];
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -28,7 +37,7 @@ class SignupForm extends Model {
             ['email', 'required'],
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
-            ['email', 'unique', 'targetClass' => User::class, 'message' => 'This email address has already been taken.'],
+            ['email', 'unique', 'targetClass' => User::class, 'message' => Yii::t('login',  'This email address has already been taken.')],
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
         ];
@@ -52,7 +61,7 @@ class SignupForm extends Model {
         if ($user->save()) {
             $event = new UserRegisteredEvent();
             $event->user = $user;
-            $event->subject = 'New user registered';
+            $event->subject = Yii::t('login',  'New user registered');
 
             $user->trigger(User::USER_REGISTERED, $event);
 

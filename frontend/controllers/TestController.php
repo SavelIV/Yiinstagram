@@ -14,23 +14,23 @@ use frontend\models\News;
 class TestController extends Controller
 {
 
-    public function actionGenerate()
-    {
-
-
-        /* faker-generator */
-        $faker = Factory::create();
-        for ($j = 0; $j < 100; $j++) {
-
-            $news = [];
-            for ($i = 0; $i < 1000; $i++) {
-                $news[] = [$faker->text(rand(20, 35)), $faker->text(rand(1000, 1500)), rand(1, 3)];
-            }
-
-            Yii::$app->db->createCommand()->batchInsert('news', ['title', 'content', 'status'], $news)->execute();
-            unset($news);
-        }
-    }
+//    public function actionGenerate()
+//    {
+//
+//
+//        /* faker-generator */
+//        $faker = Factory::create();
+//        for ($j = 0; $j < 100; $j++) {
+//
+//            $news = [];
+//            for ($i = 0; $i < 1000; $i++) {
+//                $news[] = [$faker->text(rand(20, 35)), $faker->text(rand(1000, 1500)), rand(1, 3)];
+//            }
+//
+//            Yii::$app->db->createCommand()->batchInsert('news', ['title', 'content', 'status'], $news)->execute();
+//            unset($news);
+//        }
+//    }
 
     //
     public function actionIndex()

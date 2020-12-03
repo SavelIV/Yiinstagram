@@ -2,8 +2,8 @@
 
 namespace frontend\models;
 
-use Yii;
 use frontend\models\User;
+use Yii;
 
 /**
  * This is the model class for table "post".
@@ -104,7 +104,7 @@ class Post extends \yii\db\ActiveRecord
     }
 
     /**
-     * Add complaint to post from given user
+     * Check whether given user reported current post
      * @param User $user
      * @return boolean
      */
@@ -113,6 +113,42 @@ class Post extends \yii\db\ActiveRecord
         /* @var $redis Connection */
         $redis = Yii::$app->redis;
         return (bool) $redis->sismember("post:{$this->id}:complaints", $user->getId());
+    }
+
+    /**
+     * Add complaint to post from given user
+     * @param User $user
+     * @return boolean
+     */
+    public function complain(User $user)
+    {
+        /* @var $redis Connection */
+        $redis = Yii::$app->redis;
+        $key = "post:{$this->getId()}:complaints";
+
+        if (!$redis->sismember($key, $user->getId())) {
+            $redis->sadd($key, $user->getId());
+            $this->complaints++;
+            return $this->save(false, ['complaints']);
+        }
+    }
+
+    /**
+     * Delete complaint to post from given user
+     * @param User $user
+     * @return boolean
+     */
+    public function unComplain(User $user)
+    {
+        /* @var $redis Connection */
+        $redis = Yii::$app->redis;
+        $key = "post:{$this->getId()}:complaints";
+
+        if ($redis->sismember($key, $user->getId())) {
+            $redis->srem($key, $user->getId());
+            $this->complaints--;
+            return $this->save(false, ['complaints']);
+        }
     }
 
 }

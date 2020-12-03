@@ -5,21 +5,20 @@
 use yii\helpers\Html;
 use frontend\widgets\newsList\NewsList;
 
-$this->title = 'About';
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = Html::encode(Yii::t('menu', 'About'));
 
 
 ?>
 <div class="site-about">
     <div class="row">
         <div class="col-md-9">
-            <h1>About Yiinstagram project</h1>
+            <h1><?php echo Yii::t('about', 'About this project'); ?></h1>
 
-            <p>This is the About page. You may modify the following file to customize its content:</p>
+            <p><?php echo Yii::t('about','Coming soon...'); ?></p>
 
         </div>
         <div class="col-md-3">
-          <h2>News:</h2>
+          <h2><?php echo Yii::t('about','Last news:'); ?></h2>
           <?php echo NewsList::widget(['showLimit' => 5]);?>  
         </div>
     

@@ -6,21 +6,16 @@ use yii\widgets\ActiveForm;
 /* @var $model frontend\models\Subscribe  */
 /* @var $subscribers console\models\Subscriber  */
 
-
-/*Заголовок страницы:*/
-$this->title = 'Subscribe to newsletter';
-
-/* Установка метатегов:*/
-$this->registerMetaTag([
-  'name' => 'description',
-  'content' => 'Description of the page...'
-]);
-
+$this->title = Html::encode(Yii::t('flash', 'Subscribe to newsletter'));
 
 ?>
+<h3><?php echo Yii::t('flash', 'Weekly Email Update'); ?></h3>
+<p><?php echo Yii::t('flash', 'Subscribe below and we`ll send you a weekly email summary of all the spam
+    that you`ll be able to handle!'); ?>
+</p>
 <?php $form = ActiveForm::begin() ?>
 <?= $form->field($model, 'email') ?>
-<?= Html::submitButton('Send', ['class' => 'btn btn-success']) ?>
+<?= Html::submitButton(Yii::t('flash', 'Subscribe'), ['class' => 'btn btn-success']) ?>
 <?php ActiveForm::end() ?>
 
 

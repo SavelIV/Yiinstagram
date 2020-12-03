@@ -74,7 +74,6 @@ class Storage extends Component implements StorageInterface
     }
 
     /**
-     * 
      * @param string $filename
      * @return string
      */
@@ -82,4 +81,42 @@ class Storage extends Component implements StorageInterface
     {
         return Yii::$app->params['storageUri'].$filename;
     }
+
+    /**
+     * Delete picture from disc.
+     * @param string $filename
+     * @return bool
+     */
+    public function deleteFile(string $filename)
+    {
+        $deletedFile = FileHelper::normalizePath($this->getStoragePath() . $filename);
+        if (file_exists($deletedFile)) {
+
+            unlink($deletedFile);
+
+            if ($this->isDirEmpty(dirname($deletedFile))) {
+                rmdir(dirname($deletedFile));
+                if ($this->isDirEmpty(dirname($deletedFile, 2))) {
+                    rmdir(dirname($deletedFile, 2));
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Check if a directory is empty
+     *
+     * @param string $dirname
+     * @return bool
+     */
+    function isDirEmpty($dirname)
+    {
+        foreach (scandir($dirname) as $file) {
+            if (!in_array($file, array('.', '..'))) return false;
+        }
+        return true;
+    }
+
 }

@@ -210,7 +210,8 @@ header .header-top .brand-logo h1 span {
     text-decoration: none;
 }
 
-.blog-posts .post .post-bottom .post-likes a.display-none
+.blog-posts .post .post-bottom .post-likes a.display-none,
+.post-report a.display-none
 {
     display: none;
 }

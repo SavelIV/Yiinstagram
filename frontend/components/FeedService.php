@@ -5,6 +5,7 @@ namespace frontend\components;
 use yii\base\Component;
 use frontend\models\Feed;
 use frontend\models\User;
+use frontend\models\Post;
 
 /**
  * Feed component

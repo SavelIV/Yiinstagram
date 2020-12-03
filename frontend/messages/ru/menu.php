@@ -1,10 +1,14 @@
 <?php
 
 return [
-    'Signup' => 'Регистрация',
+    'Register' => 'Регистрация',
     'Login' => 'Вход',
+    'Home' => 'Главная',
+    'About' => 'О проекте',
+    'Contact' => 'Контакты',
+    'Profile actions' => 'Действия профиля',
     'My profile' => 'Мой профиль',
-    'Create post' => 'Добавить пост',
     'Newsfeed' => 'Лента новостей',
+    'Create post' => 'Создать пост',
     'Logout ({username})' => 'Выход ({username})',
 ];

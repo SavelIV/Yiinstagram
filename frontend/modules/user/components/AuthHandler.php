@@ -33,11 +33,22 @@ class AuthHandler {
         if ($auth) {
             /* @var User $user */
             $user = $auth->user;
-            Yii::$app->session->setFlash('success', 'You have login successfully.');
-            return Yii::$app->user->login($user);
+            $registered = Yii::$app->user->login($user);
+            Yii::$app->session->setFlash('success', Yii::t('flash', 'Hello {user}. You have login successfully.',
+                [
+                    'user' => Yii::$app->user->identity->username,
+                ])
+            );
+            return $registered;
         }
         if ($user = $this->createAccount($attributes)) {
-            return Yii::$app->user->login($user);
+            $registered = Yii::$app->user->login($user);
+            Yii::$app->session->setFlash('success', Yii::t('flash', 'New User {user} registered. Thank you for registration.',
+                [
+                    'user' => Yii::$app->user->identity->username,
+                ])
+            );
+            return $registered;
         }
     }
 
@@ -67,8 +78,9 @@ class AuthHandler {
 
         if ($email !== null && User::find()->where(['email' => $email])->exists()) {
             Yii::$app->getSession()->setFlash('error', [
-                Yii::t('app', "User with the same email as in {client} account already exists "
-                        . "but isn't linked to it. Login using email first to link it.", ['client' => $this->client->getTitle()]),
+                Yii::t('flash', "User with the same email as in {client} account already exists "
+                    . "but isn't linked to it. Login using email first to link it.",
+                    ['client' => $this->client->getTitle()]),
             ]);
             return;
         }
@@ -83,7 +95,7 @@ class AuthHandler {
 
                 $event = new UserRegisteredEvent();
                 $event->user = $user;
-                $event->subject = 'New user registered';
+                $event->subject = Yii::t('flash', 'New user registered.');
 
                 $user->trigger(User::USER_REGISTERED, $event);
 
@@ -91,7 +103,7 @@ class AuthHandler {
             }
         }
         Yii::$app->getSession()->setFlash('error', [
-            Yii::t('app', 'Unable to save {client} account: {errors}', [
+            Yii::t('flash', 'Unable to save {client} account: {errors}', [
                 'client' => $this->client->getTitle(),
                 'errors' => json_encode($user->getErrors()),
             ]),

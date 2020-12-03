@@ -1,13 +1,14 @@
 <?php
 /* @var $model  frontend\models\SearchForm */
+/* @var $results [] frontend\controllers\SearchController */
 
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 use frontend\helpers\HighlightHelper;
 
-$this->title = 'Search';
+$this->title = Html::encode(Yii::t('flash', 'Search'));
 ?>
-<h1>Search Sphinx</h1>
+<h1><?php echo Yii::t('flash', 'Search "Sphinx"'); ?></h1>
 
 <div class="row">
     <div class="col-md-12">
@@ -15,7 +16,7 @@ $this->title = 'Search';
         
         <?php echo $form->field($model, 'keyword'); ?>
         
-        <?php echo Html::submitButton('Search', ['class' => 'btn btn-primary']); ?>
+        <?php echo Html::submitButton(Yii::t('flash', 'Search'), ['class' => 'btn btn-primary']); ?>
         <?php ActiveForm::end(); ?>
     </div>
 </div>

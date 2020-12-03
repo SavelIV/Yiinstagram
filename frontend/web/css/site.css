@@ -83,7 +83,7 @@ a.desc:after {
     border: none;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .nav li > form > button.logout {
         display: block;
         text-align: left;
@@ -193,7 +193,6 @@ a.desc:after {
     width: auto;
     height: 100%;
     margin: 0 auto;
-    /*max-width: none;*/
 }
 
 /*for main page feeditems*/
@@ -240,4 +239,9 @@ a.desc:after {
 
 .likes-count {
     margin-right: 15px;
+}
+
+/*for round icons*/
+.auth-icon {
+    border-radius: 50px;
 }

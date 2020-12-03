@@ -14,7 +14,6 @@ class SearchController extends \yii\web\Controller
         
         if ($model->load(Yii::$app->request->post())) {
              $results = $model->search();
-            
         }
         return $this->render('index',[
             'model' => $model,
@@ -30,7 +29,6 @@ class SearchController extends \yii\web\Controller
         
         if ($model->load(Yii::$app->request->post())) {
              $results = $model->searchAdvanced();
-            
         }
         return $this->render('advanced',[
             'model' => $model,

@@ -2,6 +2,7 @@
 
 namespace frontend\models;
 
+use Yii;
 use yii\base\Model;
 use frontend\models\NewsSearch;
 
@@ -11,6 +12,13 @@ use frontend\models\NewsSearch;
 class SearchForm extends Model {
 
     public $keyword;
+
+    public function attributeLabels()
+    {
+        return [
+            'keyword' => Yii::t('flash', 'Keyword'),
+        ];
+    }
 
     /**
      * {@inheritdoc}

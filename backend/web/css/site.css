@@ -119,3 +119,71 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+
+
+/* fade out alerts */
+.alert {
+    animation: fadeOut ease 15s;
+    -webkit-animation: fadeOut ease 15s;
+    -moz-animation: fadeOut ease 15;
+    -o-animation: fadeOut ease 15s;
+    -ms-animation: fadeOut ease 15s;
+}
+@keyframes fadeOut {
+    0% {opacity:1;}
+    10% {opacity:0.3;}
+    11% {opacity:1;}
+    20% {opacity:0.3;}
+    21% {opacity:1;}
+    30% {opacity:0.3;}
+    31% {opacity:1;}
+    100% {opacity:0;}
+}
+
+@-moz-keyframes fadeOut {
+    0% {opacity:1;}
+    10% {opacity:0.3;}
+    11% {opacity:1;}
+    20% {opacity:0.3;}
+    21% {opacity:1;}
+    30% {opacity:0.3;}
+    31% {opacity:1;}
+    100% {opacity:0;}
+}
+
+@-webkit-keyframes fadeOut {
+    0% {opacity:1;}
+    10% {opacity:0.3;}
+    11% {opacity:1;}
+    20% {opacity:0.3;}
+    21% {opacity:1;}
+    30% {opacity:0.3;}
+    31% {opacity:1;}
+    100% {opacity:0;}
+}
+
+@-o-keyframes fadeOut {
+    0% {opacity:1;}
+    10% {opacity:0.3;}
+    11% {opacity:1;}
+    20% {opacity:0.3;}
+    21% {opacity:1;}
+    30% {opacity:0.3;}
+    31% {opacity:1;}
+    100% {opacity:0;}
+}
+
+@-ms-keyframes fadeOut {
+    0% {opacity:1;}
+    10% {opacity:0.3;}
+    11% {opacity:1;}
+    20% {opacity:0.3;}
+    21% {opacity:1;}
+    30% {opacity:0.3;}
+    31% {opacity:1;}
+    100% {opacity:0;}
+}
+.alert.fade.in {
+    opacity: 0;
+}
+

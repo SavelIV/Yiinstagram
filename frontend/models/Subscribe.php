@@ -14,13 +14,20 @@ use Yii;
 class Subscribe extends Model
 {
    public $email;
+
+    public function attributeLabels()
+    {
+        return [
+            'email' => Yii::t('contact', 'Email'),
+        ];
+    }
    
    public function rules()
    {
        return [
            ['email','required'],
            ['email','email'],
-           ['email', 'unique', 'targetClass' => Subscriber::className(), 'message' => 'This email address has already been taken.'],
+           ['email', 'unique', 'targetClass' => Subscriber::class, 'message' => Yii::t('flash', 'This email address has already been taken.')],
            
        ];
     }

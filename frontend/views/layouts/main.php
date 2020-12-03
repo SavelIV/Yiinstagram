@@ -115,7 +115,7 @@ FontAwesomeAsset::register($this);
         </div>
         <p class="text">
             <a href="<?php echo Url::to(['/site/about']); ?>">
-                &copy;<?= ' "' . Html::encode(Yii::$app->name) . '" ' . date('Y'); ?>
+                &copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?>
             </a>
         </p>
     </div>

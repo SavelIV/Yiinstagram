@@ -81,7 +81,11 @@ class DefaultController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            Yii::$app->session->setFlash('success', 'Hello, '. Yii::$app->user->identity->username .'. You have login successfully.');
+            Yii::$app->session->setFlash('success', Yii::t('flash', 'Hello {user}. You have login successfully.',
+                [
+                    'user' => Yii::$app->user->identity->username,
+                ])
+            );
             return $this->goHome();
         } else {
             $model->password = '';
@@ -100,7 +104,7 @@ class DefaultController extends Controller
     public function actionLogout()
     {
         Yii::$app->user->logout();
-        Yii::$app->session->setFlash('info', 'You have logout successfully.');
+        Yii::$app->session->setFlash('info', Yii::t('flash', 'You have logout successfully.'));
 
         return $this->goHome();
     }
@@ -115,7 +119,11 @@ class DefaultController extends Controller
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post()) && $user = $model->signup()) {
             Yii::$app->user->login($user);
-            Yii::$app->session->setFlash('success', 'New User '. Yii::$app->user->identity->username .' registered. Thank you for registration.');
+            Yii::$app->session->setFlash('success', Yii::t('flash', 'New User {user} registered. Thank you for registration.',
+                [
+                    'user' => Yii::$app->user->identity->username,
+                ])
+            );
             return $this->goHome();
         }
 
@@ -134,11 +142,11 @@ class DefaultController extends Controller
         $model = new PasswordResetRequestForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {
-                Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
+                Yii::$app->session->setFlash('success', Yii::t('flash', 'Check your email for further instructions.'));
 
                 return $this->goHome();
             } else {
-                Yii::$app->session->setFlash('error', 'Sorry, we are unable to reset password for the provided email address.');
+                Yii::$app->session->setFlash('error', Yii::t('flash', 'Sorry, we are unable to reset password for the provided email address.'));
             }
         }
 
@@ -163,7 +171,7 @@ class DefaultController extends Controller
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
-            Yii::$app->session->setFlash('success', 'New password saved.');
+            Yii::$app->session->setFlash('success', Yii::t('flash', 'New password saved.'));
 
             return $this->goHome();
         }
