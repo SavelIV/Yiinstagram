@@ -8,7 +8,7 @@ class AboutCest
     public function checkAbout(FunctionalTester $I)
     {
         $I->amOnRoute('site/about');
-        $I->see('About Yiinstagram project', 'h1');
+        $I->see('About this project', 'h1');
     }
 
 }
