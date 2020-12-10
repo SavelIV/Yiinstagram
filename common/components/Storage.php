@@ -24,7 +24,7 @@ class Storage extends Component implements StorageInterface
      */
     public function saveUploadedFile(UploadedFile $file)
     {
-        $path = $this->preparePath($file); 
+        $path = $this->preparePath($file);
 
         if ($path && $file->saveAs($path)) {
             return $this->fileName;
@@ -40,10 +40,10 @@ class Storage extends Component implements StorageInterface
     {
         $this->fileName = $this->getFileName($file);  
         //     0c/a9/277f91e40054767f69afeb0426711ca0fddd.jpg
-        
+
         $path = $this->getStoragePath() . $this->fileName;  
         //     /var/www/project/frontend/web/uploads/0c/a9/277f91e40054767f69afeb0426711ca0fddd.jpg
-        
+
         $path = FileHelper::normalizePath($path);
         if (FileHelper::createDirectory(dirname($path))) {
             return $path;
@@ -57,7 +57,7 @@ class Storage extends Component implements StorageInterface
     protected function getFilename(UploadedFile $file)
     {
         // $file->tempname   -   /tmp/qio93kf
-        
+
         $hash = sha1_file($file->tempName); // 0ca9277f91e40054767f69afeb0426711ca0fddd
         
         $name = substr_replace($hash, '/', 2, 0);
@@ -102,7 +102,7 @@ class Storage extends Component implements StorageInterface
             }
             return true;
         }
-        return false;
+        return true;
     }
 
     /**

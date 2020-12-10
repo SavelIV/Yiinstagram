@@ -16,6 +16,9 @@ return [
         'complaints' => [
             'class' => 'backend\modules\complaints\Module',
         ],
+        'user' => [
+            'class' => 'backend\modules\user\Module',
+        ],
     ],
     'components' => [
         'request' => [
@@ -50,4 +53,7 @@ return [
         ],
     ],
     'params' => $params,
+    'aliases' => [
+        '@userPictures' => 'http://yii2site.com/img',
+    ]
 ];

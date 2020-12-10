@@ -1,13 +1,11 @@
 <?php
 namespace frontend\models;
 
-use phpDocumentor\Reflection\Types\Integer;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
-use common\components\Storage;
 
 
 /**
@@ -35,6 +33,7 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_ACTIVE = 10;
     const USER_REGISTERED = 'user_registered';
     const DEFAULT_IMAGE = '/img/profile_default_image.jpg';
+    const MAX_ABOUT_LENGTH = 1000;
 
     /**
      * {@inheritdoc}
@@ -71,6 +70,10 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
+            [['username','nickname'], 'trim'],
+            ['username', 'required'],
+            [['username','nickname'], 'string', 'min' => 2, 'max' => 30],
+            [['about'], 'string', 'max' => self::MAX_ABOUT_LENGTH],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
         ];
@@ -226,7 +229,7 @@ class User extends ActiveRecord implements IdentityInterface
     }
     /**
      * Subscribe current user to given user
-     * @param \frontend\models\User $user
+     * @param User $user
      */
     public function followUser(User $user)
     {
@@ -238,7 +241,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * Unsubscribe current user from given user
-     * @param \frontend\models\User $user
+     * @param User $user
      */
     public function unfollowUser(User $user)
     {
@@ -294,7 +297,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * Check whether current user has mutual subscriptions with given user
-     * @param \frontend\models\User $user
+     * @param User $user
      * @return array
      */
     public function getMutualSubscriptionsTo(User $user)
@@ -324,8 +327,22 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
+     * Delete picture from user record and file system
+     * @return boolean
+     */
+    public function deletePicture()
+    {
+        if ($this->picture && Yii::$app->storage->deleteFile($this->picture)) {
+            $this->picture = null;
+            return $this->save(false, ['picture']);
+        }
+        return false;
+    }
+
+
+    /**
      * Get data for newsfeed
-     * @param integer $limit
+     * @param int $limit
      * @return array
      */
     public function getFeed(int $limit)

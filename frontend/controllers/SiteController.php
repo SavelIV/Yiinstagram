@@ -40,7 +40,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $users = User::find()->limit(self::ACTIVE_USERS_LIMIT)->all();
+        $users = User::find()->where(['status' => User::STATUS_ACTIVE])->limit(self::ACTIVE_USERS_LIMIT)->all();
 
         /* @var $currentUser User */
         if ($currentUser = Yii::$app->user->identity) {

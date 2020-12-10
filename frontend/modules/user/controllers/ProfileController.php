@@ -39,6 +39,28 @@ class ProfileController extends Controller {
     }
 
     /**
+     * Updates an existing User profile.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param int $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionUpdateProfile($id)
+    {
+
+        $model = $this->findUser($id);
+
+         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+             Yii::$app->session->setFlash('success', 'Your profile has been updated');
+             return $this->redirect(['view', 'nickname' => $model->nickname]);
+         }
+
+        return $this->render('update', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
      * Handle profile image upload via ajax request
      */
     public function actionUploadPicture()
@@ -63,6 +85,21 @@ class ProfileController extends Controller {
         return ['success' => false, 'errors' => $model->getErrors()];
     }
 
+    public function actionDeletePicture()
+    {
+        /* @var $currentUser User */
+        $currentUser = Yii::$app->user->identity;
+
+        if ($currentUser->deletePicture()) {
+            Yii::$app->session->setFlash('success', Yii::t('flash', 'Picture deleted.'));
+        } else {
+            Yii::$app->session->setFlash('danger', Yii::t('flash', 'Error occurred.'));
+        }
+
+        return $this->redirect(['/user/profile/view', 'nickname' => $currentUser->getNickname()]);
+    }
+
+
     /**
      * @param string $nickname
      * @return User
@@ -70,7 +107,7 @@ class ProfileController extends Controller {
      */
     private function findUser($nickname)
     {
-        if ($user = User::find()->where(['nickname' => $nickname])->orWhere(['id' => $nickname])->one()) {
+        if ($user = User::find()->where(['nickname' => $nickname, 'status' => User::STATUS_ACTIVE])->orWhere(['id' => $nickname, 'status' => User::STATUS_ACTIVE])->one()) {
             return $user;
         }
         throw new NotFoundHttpException();

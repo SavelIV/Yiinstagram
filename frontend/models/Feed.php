@@ -71,6 +71,16 @@ class Feed extends \yii\db\ActiveRecord
     }
 
     /**
+     * @return mixed
+     */
+    public function countComments()
+    {
+        /* @var $redis Connection */
+        $redis = Yii::$app->redis;
+        return $redis->get("post:{$this->post_id}:comments");
+    }
+
+    /**
      * Check whether given user reported current post
      * @param \frontend\models\User $user
      * @return boolean

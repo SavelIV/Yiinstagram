@@ -82,13 +82,28 @@ class Post extends \yii\db\ActiveRecord
         /* @var $redis Connection */
         $redis = Yii::$app->redis;
         $redis->del("post:{$this->id}:complaints");
-        $redis->del("post:{$this->id}:likes");
 
+        $this->deleteUsersLikesFromRedis();
         $this->deleteImage();
 
         $models = Feed::find()->where(['post_id' => $this->id])->all();
         foreach ($models as $model) {
             $model->delete();
+        }
+        return true;
+    }
+
+    public function deleteUsersLikesFromRedis()
+    {
+        /* @var $redis Connection */
+        $redis = Yii::$app->redis;
+
+        $keysLikes = "post:{$this->id}:likes";
+        if ($idsUsers = $redis->smembers($keysLikes)) {
+            foreach ($idsUsers as $idsUser) {
+                $redis->srem("user:{$idsUser}:likes", $this->id);
+            }
+            $redis->del($keysLikes);
         }
         return true;
     }

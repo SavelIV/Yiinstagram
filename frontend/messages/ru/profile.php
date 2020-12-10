@@ -2,7 +2,8 @@
 
 return [
     'Edit profile' => 'Редактировать профиль',
-    'Profile image updated' => 'Изображение профиля обновлено.',
+    'Delete picture' => 'Удалить картинку профиля',
+    'Profile image updated' => 'Изображение профиля обновлено',
     'Unsubscribe' => 'Отписаться',
     'Subscribe' => 'Подписаться',
     'Friends, who are also following ' => 'Друзья, также подписанные на ',

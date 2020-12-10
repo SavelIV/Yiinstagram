@@ -59,6 +59,10 @@ class PostForm extends Model
      */
     public function resizePicture()
     {
+        if ($this->picture->error) {
+            return;
+        }
+
         $width = Yii::$app->params['postPicture']['maxWidth'];
         $height = Yii::$app->params['postPicture']['maxHeight'];
 
@@ -69,7 +73,10 @@ class PostForm extends Model
         $image->resize($width, $height, function ($constraint) {
             $constraint->aspectRatio();
             $constraint->upsize();
-        })->save($this->picture->tempName . '.' . $this->picture->extension);
+        });
+        $image->insert('@web/wmark.png','bottom-right');
+        $image->save($this->picture->tempName  . '.' . $file->extension);
+
     }
 
     /**

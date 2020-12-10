@@ -5,6 +5,7 @@ use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 use yii\web\IdentityInterface;
 
 
@@ -22,23 +23,27 @@ use yii\web\IdentityInterface;
  * @property integer $created_at
  * @property integer $updated_at
  * @property string $password write-only password
+ * @property string $picture
  */
 class User extends ActiveRecord implements IdentityInterface
 {
     const STATUS_DELETED = 0;
-    const STATUS_INACTIVE = 9;
     const STATUS_ACTIVE = 10;
-    const USER_REGISTERED = 'user_registered';
-    
+
+    const DEFAULT_IMAGE = "@userPictures/profile_default_image.jpg";
+
+    const ROLE_ADMIN = 'Admin';
+    const ROLE_MODERATOR = 'Moderator';
+
+    public $roles;
+
     /**
-     * навешиваем обработчик EmailService из components на событие USER_REGISTERED
+     * {@inheritdoc}
      */
     public function init()
     {
-      $this->on(self::USER_REGISTERED, [Yii::$app->emailService, 'notifyAdmins']);
-      $this->on(self::USER_REGISTERED, [Yii::$app->emailService, 'notifyUser']);
-      parent::init();
-        
+        $this->on(self::EVENT_AFTER_UPDATE, [$this, 'saveRoles']);
+        parent::init();
     }
 
     /**
@@ -65,10 +70,46 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
+            ['roles', 'safe'],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
-            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
+            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
         ];
     }
+
+    /**
+     * Revoke old roles and assign new if any
+     */
+    public function saveRoles()
+    {
+        Yii::$app->authManager->revokeAll($this->getId());
+
+        if (is_array($this->roles)) {
+            foreach ($this->roles as $roleName) {
+                if ($role = Yii::$app->authManager->getRole($roleName)) {
+                    Yii::$app->authManager->assign($role, $this->getId());
+                }
+            }
+        }
+    }
+
+    /**
+     * Populate roles attribute with data from RBAC after record loaded from DB
+     */
+    public function afterFind()
+    {
+        $this->roles = $this->getRoles();
+    }
+
+    /**
+     * Get user roles from RBAC
+     * @return array
+     */
+    public function getRoles()
+    {
+        $roles = Yii::$app->authManager->getRolesByUser($this->getId());
+        return ArrayHelper::getColumn($roles, 'name', false);
+    }
+
 
     /**
      * {@inheritdoc}
@@ -112,19 +153,6 @@ class User extends ActiveRecord implements IdentityInterface
         return static::findOne([
             'password_reset_token' => $token,
             'status' => self::STATUS_ACTIVE,
-        ]);
-    }
-
-    /**
-     * Finds user by verification email token
-     *
-     * @param string $token verify email token
-     * @return static|null
-     */
-    public static function findByVerificationToken($token) {
-        return static::findOne([
-            'verification_token' => $token,
-            'status' => self::STATUS_INACTIVE
         ]);
     }
 
@@ -178,8 +206,6 @@ class User extends ActiveRecord implements IdentityInterface
     public function validatePassword($password)
     {
         return Yii::$app->security->validatePassword($password, $this->password_hash);
-        
-
     }
 
     /**
@@ -208,11 +234,6 @@ class User extends ActiveRecord implements IdentityInterface
         $this->password_reset_token = Yii::$app->security->generateRandomString() . '_' . time();
     }
 
-    public function generateEmailVerificationToken()
-    {
-        $this->verification_token = Yii::$app->security->generateRandomString() . '_' . time();
-    }
-
     /**
      * Removes password reset token
      */
@@ -227,5 +248,28 @@ class User extends ActiveRecord implements IdentityInterface
     public function getEmail()
     {
         return $this->email;
+    }
+
+    /**
+     * Get profile picture
+     * @return string
+     */
+    public function getPicture()
+    {
+        if ($this->picture) {
+            return Yii::$app->storage->getFile($this->picture);
+        }
+        return self::DEFAULT_IMAGE;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRolesDropdown()
+    {
+        return [
+            self::ROLE_ADMIN => 'Admin',
+            self::ROLE_MODERATOR => 'Moderator',
+        ];
     }
 }

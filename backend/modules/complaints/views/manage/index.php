@@ -47,7 +47,7 @@ $this->title = 'Posts';
                 'template' => '{view}&nbsp;&nbsp;&nbsp;{approve}&nbsp;&nbsp;&nbsp;{delete}',
                 'buttons' => [
                     'approve' => function ($url, $post) {
-                        return Html::a('<span class="glyphicon glyphicon-ok"></span>', ['approve', 'id' => $post->id]);
+                        return Html::a('<span class="glyphicon glyphicon-ok"></span>', ['approve', 'id' => $post->id],['title' => 'Approve']);
                     },
                 ],
             ],

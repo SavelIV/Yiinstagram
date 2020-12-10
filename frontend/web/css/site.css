@@ -245,3 +245,20 @@ a.desc:after {
 .auth-icon {
     border-radius: 50px;
 }
+/*for comments*/
+.post-comment {
+    word-wrap: break-word;
+    width: 50%;
+    margin-left: 70px;
+    color:darkblue;
+    background: #eee;
+    border: 1px solid #000;
+    border-radius:3px;
+    padding-left: 5px;
+
+}
+
+.post-button {
+    margin-left: 70px;
+    padding-top: 5px;
+}

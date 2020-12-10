@@ -20,4 +20,6 @@ return [
     'Check your email for further instructions.' => 'Проверьте свою электронную почту для получения дальнейших инструкций.',
     'Sorry, we are unable to reset password for the provided email address.' => 'К сожалению, мы не можем сбросить пароль для указанного адреса электронной почты.',
     'New password saved.' => 'Новый пароль сохранен.',
+    'Picture deleted.' => 'Картинка удалена.',
+    'Error occurred.' => 'Возникла ошибка.',
 ];

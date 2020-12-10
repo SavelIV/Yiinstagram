@@ -187,3 +187,14 @@ a.desc:after {
     opacity: 0;
 }
 
+/*for author image*/
+.user-index td .author-image {
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #444;
+}
+
+
+

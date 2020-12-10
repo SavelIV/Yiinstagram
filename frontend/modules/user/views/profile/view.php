@@ -46,7 +46,8 @@ $this->title = Html::encode($user->username);
                                         ],
                                     ]);
                                     ?>
-                                    <a href="#" class="btn btn-default"><?php echo Yii::t('profile', 'Edit profile'); ?></a>
+                                    <a href="<?php echo Url::to(['/user/profile/delete-picture']); ?>" class="btn btn-danger"><?php echo Yii::t('profile', 'Delete picture'); ?></a>
+                                    <a href="<?php echo Url::to(['/user/profile/update-profile', 'id' => $user->getId()]); ?>" class="btn btn-default"><?php echo Yii::t('profile', 'Edit profile'); ?></a>
                                 <?php endif; ?>
                                 <br/>
                                 <br/>
@@ -58,27 +59,33 @@ $this->title = Html::encode($user->username);
                             </div>
 
                             <?php if ($currentUser && !$currentUser->equals($user)): ?>
-                                <a href="<?php echo Url::to(['/user/profile/unsubscribe', 'id' => $user->getId()]); ?>"
-                                   class="btn btn-info <?php echo ($currentUser && $currentUser->isFollowUser($user->getId())) ? "" : "display-none"; ?>">
-                                    <?php echo Yii::t('profile', 'Unsubscribe'); ?>
-                                </a>
-                                <a href="<?php echo Url::to(['/user/profile/subscribe', 'id' => $user->getId()]); ?>"
-                                   class="btn btn-info <?php echo ($currentUser && $currentUser->isFollowUser($user->getId())) ? "display-none" : ""; ?>">
-                                    <?php echo Yii::t('profile', 'Subscribe'); ?>
-                                </a>
-                                <hr>
-                                <h5><?php echo Yii::t('profile', 'Friends, who are also following '); ?> <?php echo Html::encode($user->username); ?>: </h5>
-                                <div class="row">
-                                    <?php foreach ($currentUser->getMutualSubscriptionsTo($user) as $item): ?>
-                                        <div class="col-md-12">
-                                            <a href="<?php echo Url::to(['/user/profile/view', 'nickname' => ($item['nickname']) ? $item['nickname'] : $item['id']]); ?>"
-                                               data-toggle="tooltip"
-                                               title="<?php echo Html::encode($item['about']); ?>">
-                                                <?php echo Html::encode($item['username']); ?>
-                                            </a>
-                                        </div>
-                                    <?php endforeach; ?>
-                                </div>
+
+                                <?php if ($currentUser->isFollowUser($user->getId())): ?>
+                                    <a href="<?php echo Url::to(['/user/profile/unsubscribe', 'id' => $user->getId()]); ?>"
+                                       class="btn btn-info"><?php echo Yii::t('profile', 'Unsubscribe'); ?>
+                                    </a>
+                                <?php else: ?>
+                                    <a href="<?php echo Url::to(['/user/profile/subscribe', 'id' => $user->getId()]); ?>"
+                                       class="btn btn-info"><?php echo Yii::t('profile', 'Subscribe'); ?>
+                                    </a>
+                                <?php endif; ?>
+
+                                <?php if ($mutualSubscriptions = $currentUser->getMutualSubscriptionsTo($user)): ?>
+                                    <hr>
+                                    <h5><?php echo Yii::t('profile', 'Friends, who are also following '); ?> <?php echo Html::encode($user->username); ?>
+                                        : </h5>
+                                    <div class="row">
+                                        <?php foreach ($mutualSubscriptions as $item): ?>
+                                            <div class="col-md-12">
+                                                <a href="<?php echo Url::to(['/user/profile/view', 'nickname' => ($item['nickname']) ? $item['nickname'] : $item['id']]); ?>"
+                                                   data-toggle="tooltip"
+                                                   title="<?php echo Html::encode($item['about']); ?>">
+                                                    <?php echo Html::encode($item['username']); ?>
+                                                </a>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    </div>
+                                <?php endif; ?>
                                 <hr>
                             <?php endif; ?>
 
@@ -108,7 +115,9 @@ $this->title = Html::encode($user->username);
                             <div class="row profile-posts box-flex">
                                 <?php foreach ($user->getPosts() as $post): ?>
                                     <div class="col-md-4 profile-post box-flex-img">
-                                        <a href="<?php echo Url::to(['/post/default/view', 'id' => $post->getId()]); ?>">
+                                        <a href="<?php echo Url::to(['/post/default/view', 'id' => $post->getId()]); ?>"
+                                           data-toggle="tooltip"
+                                           title="<?php echo Yii::t('comment', 'Comments:'); ?> <?php echo ($post->countComments()) ? $post->countComments() : 0; ?>">
                                             <img src="<?php echo Yii::$app->storage->getFile($post->filename); ?>"
                                                  class="author-image"/>
                                         </a>

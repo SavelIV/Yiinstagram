@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use frontend\models\User;
+use frontend\models\Comment;
 use Yii;
 
 /**
@@ -89,6 +90,48 @@ class Post extends \yii\db\ActiveRecord
         /* @var $redis Connection */
         $redis = Yii::$app->redis;
         return $redis->scard("post:{$this->getId()}:likes");
+    }
+
+    /**
+     * Add a comment of current post by given user
+     * @param User $user
+     */
+    public function addComment(User $user)
+    {
+        /* @var $redis Connection */
+        $redis = Yii::$app->redis;
+        $redis->incr("post:{$this->getId()}:comments");
+    }
+
+    /**
+     * Delete comment of current post by given user
+     * @param User $user
+     */
+    public function deleteComment(User $user)
+    {
+        /* @var $redis Connection */
+        $redis = Yii::$app->redis;
+        $redis->decr("post:{$this->getId()}:comments");
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function countComments()
+    {
+        /* @var $redis Connection */
+        $redis = Yii::$app->redis;
+        return $redis->get("post:{$this->getId()}:comments");
+    }
+
+    /**
+     * Get list of current post comments
+     * @return array|\yii\db\ActiveRecord[]
+     */
+    public function getCommentsList()
+    {
+        return Comment::find()->Where(['post_id' => $this->id])->orderby(['id'=>SORT_ASC])->all();
     }
 
     /**

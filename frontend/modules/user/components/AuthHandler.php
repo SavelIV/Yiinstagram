@@ -12,18 +12,21 @@ use frontend\models\events\UserRegisteredEvent;
 /**
  * AuthHandler handles successful authentication via Yii auth component
  */
-class AuthHandler {
+class AuthHandler
+{
 
     /**
      * @var ClientInterface
      */
     private $client;
 
-    public function __construct(ClientInterface $client) {
+    public function __construct(ClientInterface $client)
+    {
         $this->client = $client;
     }
 
-    public function handle() {
+    public function handle()
+    {
         if (!Yii::$app->user->isGuest) {
             return;
         }
@@ -56,7 +59,8 @@ class AuthHandler {
      * @param array $attributes
      * @return Auth
      */
-    private function findAuth($attributes) {
+    private function findAuth($attributes)
+    {
         $id = ArrayHelper::getValue($attributes, 'id');
         $params = [
             'source_id' => $id,
@@ -67,11 +71,12 @@ class AuthHandler {
     }
 
     /**
-     * 
+     *
      * @param type $attributes
      * @return User|null
      */
-    private function createAccount($attributes) {
+    private function createAccount($attributes)
+    {
         $email = ArrayHelper::getValue($attributes, 'email');
         $id = ArrayHelper::getValue($attributes, 'id');
         $name = ArrayHelper::getValue($attributes, 'name');
@@ -111,7 +116,8 @@ class AuthHandler {
         $transaction->rollBack();
     }
 
-    private function createUser($email, $name) {
+    private function createUser($email, $name)
+    {
         return new User([
             'username' => $name,
             'email' => $email,
@@ -122,11 +128,12 @@ class AuthHandler {
         ]);
     }
 
-    private function createAuth($userId, $sourceId) {
+    private function createAuth($userId, $sourceId)
+    {
         return new Auth([
             'user_id' => $userId,
             'source' => $this->client->getId(),
-            'source_id' => (string) $sourceId,
+            'source_id' => (string)$sourceId,
         ]);
     }
 

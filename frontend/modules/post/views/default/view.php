@@ -2,11 +2,18 @@
 /* @var $this yii\web\View */
 /* @var $currentUser frontend\models\User */
 /* @var $post frontend\models\Post */
+/* @var $form yii\bootstrap\ActiveForm */
+/* @var $model CommentForm */
+/* @var $comments Comment */
 
+use frontend\models\CommentForm;
+use frontend\models\Comment;
 use yii\helpers\Html;
 use yii\web\JqueryAsset;
 use yii\helpers\Url;
 use yii\helpers\HtmlPurifier;
+use yii\bootstrap\ActiveForm;
+use yii\captcha\Captcha;
 
 $this->title = Html::encode(Yii::t('post', '{username}`s post', [
     'username' => $post->user->username
@@ -52,19 +59,23 @@ $this->title = Html::encode(Yii::t('post', '{username}`s post', [
                     <span class="likes-count"><?php echo $post->countLikes(); ?></span>
                     <?php if ($currentUser && !$currentUser->equals($post->user)): ?>
                         <a href="#" class="btn btn-danger button-unlike
-        <?php echo ($currentUser && $post->isLikedBy($currentUser)) ? "" : "display-none"; ?>"
+                        <?php echo ($currentUser && $post->isLikedBy($currentUser)) ? "" : "display-none"; ?>"
                            data-id="<?php echo $post->id; ?>">
-                            <?php echo Yii::t('home', 'Unlike'); ?>&nbsp;&nbsp;<span class="glyphicon glyphicon-thumbs-down"></span>
+                            <?php echo Yii::t('home', 'Unlike'); ?>&nbsp;&nbsp;<span
+                                    class="glyphicon glyphicon-thumbs-down"></span>
                         </a>
                         <a href="#" class="btn btn-success button-like
-       <?php echo ($currentUser && $post->isLikedBy($currentUser)) ? "display-none" : ""; ?>"
+                        <?php echo ($currentUser && $post->isLikedBy($currentUser)) ? "display-none" : ""; ?>"
                            data-id="<?php echo $post->id; ?>">
-                            <?php echo Yii::t('home', 'Like'); ?>&nbsp;&nbsp;<span class="glyphicon glyphicon-thumbs-up"></span>
+                            <?php echo Yii::t('home', 'Like'); ?>&nbsp;&nbsp;<span
+                                    class="glyphicon glyphicon-thumbs-up"></span>
                         </a>
                     <?php endif; ?>
                 </div>
                 <div class="post-comments">
-                    <a href="#">0 <?php echo Yii::t('home', 'Comments'); ?></a>
+                    <a href="<?php echo Url::to(['/post/default/view', 'id' => $post->id]); ?>">
+                        <?php echo Yii::t('comment', 'Comments:'); ?> <?php echo ($post->countComments()) ? $post->countComments() : 0; ?>
+                    </a>
                 </div>
                 <?php if ($currentUser && !$currentUser->equals($post->user)): ?>
                     <div class="post-report">
@@ -85,6 +96,66 @@ $this->title = Html::encode(Yii::t('post', '{username}`s post', [
                         </a>
                     </div>
                 <?php endif; ?>
+
+                <?php if ($comments): ?>
+                    <h1><?php echo Yii::t('comment', 'Comments:'); ?></h1>
+                    <?php foreach ($comments as $comment): ?>
+                        <div class="post-title">
+                            <img class="author-image" src="<?php echo $comment->user->getPicture(); ?>"/>
+                            <div class="author-name">
+                                <a href="<?php echo Url::to(['/user/profile/view', 'nickname' => ($comment->user->nickname) ? $comment->user->nickname : $comment->user->id]); ?>">
+                                    <?php echo Html::encode($comment->user->username); ?>
+                                </a>
+                            </div>
+                            <div class="post-date">
+                                <p><?php echo Yii::$app->formatter->asDatetime($comment->created_at); ?></p>
+                            </div>
+                            <div class="post-comment">
+                                <p><?php echo Html::encode($comment->text); ?></p>
+                            </div>
+                            <?php if (($currentUser->id) == ($post->user->id)): ?>
+                                <div class="post-button">
+                                    <a href="<?php echo Url::to(['/post/default/delete-comment', 'commentId' => $comment->id]); ?>"
+                                       class="btn btn-default"><?php echo  Yii::t('comment', 'delete'); ?>
+                                    </a>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+
+                <hr>
+                <?php if( Yii::$app->session->hasFlash('deleted') ): ?>
+                    <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                        <?php echo Yii::$app->session->getFlash('deleted'); ?>
+                    </div>
+                <?php endif;?>
+                <?php if( Yii::$app->session->hasFlash('added') ): ?>
+                    <div class="alert alert-success alert-dismissible fade in" role="alert">
+                        <?php echo Yii::$app->session->getFlash('added'); ?>
+                    </div>
+                <?php endif;?>
+
+                <div class="comment-form">
+
+                    <p>
+                        <?php echo Yii::t('comment', 'Please leave Your comments here.'); ?>
+                    </p>
+                    <div class="row">
+                        <div class="col-lg-5">
+                            <?php $form = ActiveForm::begin(['id' => 'comment-form']); ?>
+                            <?= $form->field($model, 'text')->textarea(['rows' => 2, 'autofocus' => true]) ?>
+                            <?= $form->field($model, 'verifyCode')->widget(Captcha::class, [
+                                'captchaAction' => '/site/captcha',
+                                'template' => '<div class="row"><div class="col-lg-3">{image}</div><div class="col-lg-6">{input}</div></div>',
+                            ]) ?>
+                            <div class="form-group">
+                                <?= Html::submitButton(Yii::t('comment', 'Submit'), ['class' => 'btn btn-primary', 'name' => 'comment-button']) ?>
+                            </div>
+                            <?php ActiveForm::end(); ?>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

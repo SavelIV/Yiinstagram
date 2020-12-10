@@ -21,7 +21,6 @@ $this->title =  Html::encode(Yii::t('menu', 'Newsfeed'));
 
                         <?php if ($feedItems): ?>
                             <?php foreach ($feedItems as $feedItem): ?>
-                                <?php /* @var $feedItem Feed */ ?>
 
                                 <!-- feed item -->
                                 <article class="post col-sm-12 col-xs-12">
@@ -67,7 +66,9 @@ $this->title =  Html::encode(Yii::t('menu', 'Newsfeed'));
                                             <?php endif; ?>
                                         </div>
                                         <div class="post-comments">
-                                            <a href="#">0 <?php echo Yii::t('home', 'Comments'); ?></a>
+                                            <a href="<?php echo Url::to(['/post/default/view', 'id' => $feedItem->post_id]); ?>">
+                                                <?php echo Yii::t('comment', 'Comments:'); ?> <?php echo ($feedItem->countComments()) ? $feedItem->countComments() : 0; ?>
+                                            </a>
                                         </div>
                                         <div class="post-report">
                                             <span class="text-danger <?php echo ($feedItem->isReported($currentUser)) ? "" : "display-none"; ?>">

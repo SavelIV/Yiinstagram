@@ -113,7 +113,9 @@ $this->title = Html::encode(Yii::$app->name);
                                                 <?php endif; ?>
                                             </div>
                                             <div class="post-comments">
-                                                <a href="#">0 <?php echo Yii::t('home', 'Comments'); ?></a>
+                                                <a href="<?php echo Url::to(['/post/default/view', 'id' => $feedItem->post_id]); ?>">
+                                                    <?php echo Yii::t('comment', 'Comments:'); ?> <?php echo ($feedItem->countComments()) ? $feedItem->countComments() : 0; ?>
+                                                </a>
                                             </div>
                                             <div class="post-report">
                                                 <span class="text-danger <?php echo ($feedItem->isReported($currentUser)) ? "" : "display-none"; ?>">
