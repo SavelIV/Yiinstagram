@@ -9,8 +9,8 @@ use yii\widgets\ActiveForm;
 $this->title = Html::encode(Yii::t('flash', 'Subscribe to newsletter'));
 
 ?>
-<h3><?php echo Yii::t('flash', 'Weekly Email Update'); ?></h3>
-<p><?php echo Yii::t('flash', 'Subscribe below and we`ll send you a weekly email summary of all the spam
+<h3><?php echo Yii::t('flash', 'Daily Email Update'); ?></h3>
+<p><?php echo Yii::t('flash', 'Subscribe below and we`ll send you a daily email summary of all the spam
     that you`ll be able to handle!'); ?>
 </p>
 <?php $form = ActiveForm::begin() ?>

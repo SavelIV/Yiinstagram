@@ -74,7 +74,7 @@ class PostForm extends Model
             $constraint->aspectRatio();
             $constraint->upsize();
         });
-        $image->insert('@web/wmark.png','bottom-right');
+        $image->insert((Yii::getAlias('@site/wmark.png')),'bottom-right');
         $image->save($this->picture->tempName  . '.' . $file->extension);
 
     }

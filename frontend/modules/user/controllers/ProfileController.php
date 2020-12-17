@@ -5,6 +5,7 @@ namespace frontend\modules\user\controllers;
 use Faker\Factory;
 use frontend\controllers\behaviors\AccessBehavior;
 use frontend\modules\user\models\forms\PictureForm;
+use yii\helpers\Html;
 use yii\web\Controller;
 use yii\web\UploadedFile;
 use frontend\models\User;
@@ -47,18 +48,51 @@ class ProfileController extends Controller {
      */
     public function actionUpdateProfile($id)
     {
-
+        $user = Yii::$app->user->identity;
         $model = $this->findUser($id);
+        if (!$user->equals($model)) {
+            return $this->redirect(['view', 'nickname' => $model->id]);
+        }
 
          if ($model->load(Yii::$app->request->post()) && $model->save()) {
-             Yii::$app->session->setFlash('success', 'Your profile has been updated');
-             return $this->redirect(['view', 'nickname' => $model->nickname]);
+             Yii::$app->session->setFlash('success', Yii::t('flash','Your profile has been updated.'));
+             return $this->redirect(['view', 'nickname' => $model->id]);
          }
 
         return $this->render('update', [
             'model' => $model,
         ]);
     }
+
+    /**
+     * Not deletes but deactivates an existing User model.
+     * If deactivation is successful, the browser will be redirected to the 'home' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionDeleteProfile($id)
+    {
+        $user = Yii::$app->user->identity;
+        $model = $this->findUser($id);
+
+        if (!$user->equals($model)) {
+            return $this->redirect(['view', 'nickname' => $model->id]);
+        }
+
+        $model->status = User::STATUS_DELETED;
+
+        if ($model->save()) {
+            Yii::$app->user->logout();
+            Yii::$app->session->setFlash('success', Yii::t('flash', 'You have deactivated your account.'));
+            return $this->goHome();
+        }
+
+        return $this->render('update', [
+            'model' => $model,
+        ]);
+    }
+
 
     /**
      * Handle profile image upload via ajax request
@@ -121,7 +155,13 @@ class ProfileController extends Controller {
 
         $currentUser->followUser($user);
 
-        Yii::$app->session->setFlash('success',  $currentUser->username .' is '. $user->username .'`s follower now.');
+        Yii::$app->session->setFlash('success',
+            Yii::t('flash', '{currentUser} is {user}`s follower now.',
+            [
+                'currentUser' => Html::encode($currentUser->username),
+                'user' => Html::encode($user->username),
+            ])
+        );
         return $this->redirect(['/user/profile/view', 'nickname' => $user->getNickname()]);
 
     }
@@ -138,7 +178,13 @@ class ProfileController extends Controller {
 
         $currentUser->unfollowUser($user);
 
-        Yii::$app->session->setFlash('error',  $currentUser->username .' is not '. $user->username .' follower anymore.');
+        Yii::$app->session->setFlash('error',
+            Yii::t('flash', '{currentUser} is not {user}`s follower anymore.',
+            [
+                'currentUser' => Html::encode($currentUser->username),
+                'user' => Html::encode($user->username),
+            ])
+        );
         return $this->redirect(['/user/profile/view', 'nickname' => $user->getNickname()]);
 
     }

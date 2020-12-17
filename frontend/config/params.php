@@ -5,7 +5,7 @@ return [
     'senderEmail' => 'noreply@saviv.site',
     'senderName' => 'saviv.site mailer',
     'shortTextLimit' => 90,
-    'maxNewsInList' => 7,
+    'maxNewsInList' => 15,
 
     'maxFileSize' => 1024 * 1024 * 4, // 4 megabites
     'storagePath' => '@frontend/web/uploads/',

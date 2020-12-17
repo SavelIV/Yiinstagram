@@ -14,3 +14,7 @@
  * \Codeception\Util\Fixtures::get('user1');
  * ```
  */
+
+/**
+ * to run tests from D:\OSPanel 5.3.7\OpenServer\domains\yii\frontend>:  ..\vendor\bin\codecept run
+ */

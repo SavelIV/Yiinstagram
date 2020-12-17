@@ -56,10 +56,15 @@ return [
             'showScriptName' => false,
             'rules' => [
                 '/' => 'site/index',
-                'news' => 'test/index',
-                'news/<id:\d+>' => 'test/view',
+                'news' => 'parser/parse',
+                'news/<id:\d+>' => 'parser/view',
+                'newsfeed' => 'site/newsfeed',
+                'about' => 'site/about',
+                'contact' => 'site/contact',
                 'profile/<nickname:[\w\-]+>' => 'user/profile/view',
                 'post/<id:\d+>' => 'post/default/view',
+                'post/create' => 'post/default/create',
+                'newsletter/unsubscribe/<id:\d+>' => 'newsletter/unsubscribe',
             ],
         ],
         'feedService' => [
@@ -79,5 +84,6 @@ return [
     'params' => $params,
     'aliases' => [
         '@images' => '/files/photos',
+        '@site' => 'http://yii2site.com',
     ]
 ];

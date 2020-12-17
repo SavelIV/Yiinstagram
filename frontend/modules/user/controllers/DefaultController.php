@@ -2,6 +2,7 @@
 
 namespace frontend\modules\user\controllers;
 
+use yii\helpers\Html;
 use yii\web\Controller;
 use Yii;
 use yii\base\InvalidArgumentException;
@@ -83,7 +84,7 @@ class DefaultController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             Yii::$app->session->setFlash('success', Yii::t('flash', 'Hello {user}. You have login successfully.',
                 [
-                    'user' => Yii::$app->user->identity->username,
+                    'user' => Html::encode(Yii::$app->user->identity->username),
                 ])
             );
             return $this->goHome();
@@ -121,7 +122,7 @@ class DefaultController extends Controller
             Yii::$app->user->login($user);
             Yii::$app->session->setFlash('success', Yii::t('flash', 'New User {user} registered. Thank you for registration.',
                 [
-                    'user' => Yii::$app->user->identity->username,
+                    'user' => Html::encode(Yii::$app->user->identity->username),
                 ])
             );
             return $this->goHome();

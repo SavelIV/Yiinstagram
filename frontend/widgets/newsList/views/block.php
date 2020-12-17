@@ -1,13 +1,16 @@
-<?php 
-use yii\helpers\Url;
-
- foreach ($list as $item): ?>
-        <h4><a href ="<?php echo Url::to(['test/view', 'id' => $item['id']]); ?>">
-            <?php echo $item['title']; ?>
-            </a>
-        </h4>
-        <p><?php echo $item['content']; ?>...</p>
-        <hr>
 <?php
-endforeach;
+/* @var $size \frontend\widgets\newsList\NewsList */
+
+use yii\helpers\Html;
+use yii\helpers\HtmlPurifier;
+
+
+?>
+<?php $newsLink = Yii::$app->urlManager->createAbsoluteUrl(['news/' . $model['id']]); ?>
+
+<h4><?php echo Html::a(Html::encode($model['title']), $newsLink); ?></h4>
+<?php echo Html::a(Html::img($model['picture'], ['width'=> $size]), $newsLink); ?>
+
+<p><?php echo HtmlPurifier::process(Yii::$app->stringHelper->getShort($model['content'])); ?>...</p>
+<hr>
 

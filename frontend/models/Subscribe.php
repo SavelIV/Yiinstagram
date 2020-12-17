@@ -37,4 +37,10 @@ class Subscribe extends Model
      $sql = "INSERT INTO subscriber (id,email) VALUES (null,'{$this->email}')";
      return Yii::$app->db->createCommand($sql)->execute();
     }
+
+    public function delete($id)
+    {
+     $sql = "DELETE FROM subscriber WHERE id = '$id'";
+     return Yii::$app->db->createCommand($sql)->execute();
+    }
 }

@@ -12,7 +12,7 @@ use yii\helpers\Html;
 use yii\helpers\HtmlPurifier;
 use frontend\widgets\newsList\NewsList;
 
-$this->title = Html::encode(Yii::$app->name);
+$this->title = Html::encode(Yii::t('home', 'Main page'));
 
 ?>
 
@@ -23,7 +23,7 @@ $this->title = Html::encode(Yii::$app->name);
             <div class="photo center-block">
                 <img id="profile-picture" class="author-image" src="<?php echo $currentUser->getPicture(); ?>"/>
             </div>
-            <?php echo Yii::$app->user->identity->username; ?></h2>
+            <?php echo Html::encode(Yii::$app->user->identity->username); ?></h2>
         <p class="lead"><?php echo Yii::t('home', 'Nice to see You.'); ?></p>
         <?php else: ?>
             <?php echo Yii::t('home', 'user. Please register or login to see all features.'); ?></h2>
@@ -41,7 +41,7 @@ $this->title = Html::encode(Yii::$app->name);
             <div class="col-lg-4 text-center">
                 <h2><?php echo Yii::t('home', 'Last News:'); ?></h2>
                 <hr>
-                <?php echo NewsList::widget(['showLimit' => 12]); ?>
+                <?php echo NewsList::widget(); ?>
             </div>
             <div class="col-lg-4 text-center">
                 <h2><?php echo Yii::t('home', 'Most active users:'); ?></h2>
@@ -148,12 +148,8 @@ $this->title = Html::encode(Yii::$app->name);
                     <?php endif; ?>
 
                 <?php else: ?>
+                    <hr>
                     <p><?php echo Yii::t('home', 'seen after login.'); ?></p>
-                    <h2><?php echo Yii::t('home', 'Search'); ?></h2>
-                    <hr>
-                    <a href="<?php echo Url::to(['search/index']); ?>"><?php echo Yii::t('home', 'Full Text Search'); ?></a>
-                    <hr>
-                    <a href="<?php echo Url::to(['search/advanced']); ?>"><?php echo Yii::t('home', 'Sphinx Search'); ?></a>
                 <?php endif; ?>
 
             </div>

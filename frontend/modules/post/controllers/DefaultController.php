@@ -66,7 +66,7 @@ class DefaultController extends Controller
 
             if ($model->save()) {
 
-                Yii::$app->session->setFlash('success', 'Post created!');
+                Yii::$app->session->setFlash('success', Yii::t('flash', 'Post created!'));
                 return $this->redirect(['/user/profile/view', 'nickname' => $user->getNickname()]);
             }
         }
@@ -90,7 +90,7 @@ class DefaultController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save($id)) {
             $post->addComment($currentUser);
-            Yii::$app->session->setFlash('added', 'Comment has been added!');
+            Yii::$app->session->setFlash('added', Yii::t('flash', 'Comment has been added!'));
             return $this->redirect(['/post/default/view', 'id' => $id]);
         }
 
@@ -117,9 +117,9 @@ class DefaultController extends Controller
 
         if ($comment->delete()) {
             $post->deleteComment($currentUser);
-            Yii::$app->session->setFlash('deleted', 'Comment has been deleted!');
+            Yii::$app->session->setFlash('deleted', Yii::t('flash', 'Comment has been deleted!'));
         } else {
-            Yii::$app->session->setFlash('error', 'Something went wrong...');
+            Yii::$app->session->setFlash('error', Yii::t('flash', 'Something went wrong...'));
         }
         return $this->redirect(['/post/default/view', 'id' => $post->id]);
     }
@@ -217,7 +217,7 @@ class DefaultController extends Controller
             return $post;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException(Yii::t('flash','The requested page does not exist.'));
     }
 
     /**
@@ -233,7 +233,7 @@ class DefaultController extends Controller
             return $comment;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException(Yii::t('flash','The requested page does not exist.'));
     }
 
 }

@@ -37,11 +37,11 @@ class SearchForm extends Model {
             return $model->fulltextSearch($this->keyword);
         }
     }
-    public function searchAdvanced() {
-        if ($this->validate()) {
-            $model = new NewsSearch();
-            return $model->advancedSearch($this->keyword);
-        }
-    }
+//    public function searchAdvanced() {
+//        if ($this->validate()) {
+//            $model = new NewsSearch();
+//            return $model->advancedSearch($this->keyword);
+//        }
+//    }
 
 }

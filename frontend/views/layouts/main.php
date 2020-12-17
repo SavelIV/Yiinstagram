@@ -38,7 +38,7 @@ FontAwesomeAsset::register($this);
                 <div class="col-md-4 col-sm-4 navicons-topbar">
                     <ul>
                         <li class="blog-search">
-                            <a href="#" title="Search"><i class="fa fa-search"></i></a>
+                            <a href="<?php echo Url::to(['search/index']); ?>" title="<?php echo Yii::t('menu', 'Site search') ?>"><i class="fa fa-search"></i></a>
                         </li>
                         <li>
                             <?= Html::beginForm(['/site/language']) ?>
@@ -83,7 +83,7 @@ FontAwesomeAsset::register($this);
                                 . Html::beginForm(['/user/default/logout'], 'post')
                                 . Html::submitButton(
                                     Yii::t('menu', 'Logout ({username})', [
-                                        'username' => Yii::$app->user->identity->username
+                                        'username' => Html::encode(Yii::$app->user->identity->username)
                                     ]) . ' <i class="fa fa-sign-out"></i>', ['class' => 'btn btn-link logout']
                                 )
                                 . Html::endForm()

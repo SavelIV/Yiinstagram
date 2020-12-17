@@ -36,8 +36,8 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                'news' => 'test/index',
-                'news/<id:\d+>' => 'test/view',
+                'news' => 'parser/parse',
+                'news/<id:\d+>' => 'parser/view',
             ],
         ],
         'stringHelper' => [

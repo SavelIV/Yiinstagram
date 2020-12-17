@@ -82,6 +82,20 @@ class User extends ActiveRecord implements IdentityInterface
     /**
      * {@inheritdoc}
      */
+    public function attributeLabels()
+    {
+        return [
+            'username' => Yii::t('profile', 'Username'),
+            'email' => Yii::t('profile', 'Email'),
+            'picture' => Yii::t('profile', 'Picture'),
+            'nickname' => Yii::t('profile', 'Nickname'),
+            'about' => Yii::t('profile','About'),
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public static function findIdentity($id)
     {
         return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
@@ -227,6 +241,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return ($this->nickname) ? $this->nickname : $this->getId();
     }
+
     /**
      * Subscribe current user to given user
      * @param User $user
@@ -327,7 +342,7 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * Delete picture from user record and file system
+     * Delete picture from user profile record and file system
      * @return boolean
      */
     public function deletePicture()
@@ -376,7 +391,7 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * Get post count
+     * Get post count of current user
      * @return int
      */
     public function getPostCount()
@@ -385,7 +400,7 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * Get posts
+     * Get posts of current user
      * @return Post[]
      */
     public function getPosts()

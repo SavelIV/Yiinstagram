@@ -2,6 +2,7 @@
 
 return [
     'Welcome!' => 'Добро пожаловать!',
+    'Main page' => 'Главная страница',
     'Nice to see You.' => 'Рады Вас видеть.',
     'Hello, ' => 'Привет, ',
     'user. Please register or login to see all features.' => 'пользователь. Пожалуйста, зарегистрируйтесь, чтобы увидеть все возможности.',

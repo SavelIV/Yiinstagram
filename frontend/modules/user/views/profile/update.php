@@ -8,7 +8,8 @@ use yii\widgets\DetailView;
 /* @var $model backend\models\User */
 /* @var $form yii\widgets\ActiveForm */
 
-$this->title = 'Update User: ' . $model->id;
+$this->title = Html::encode(Yii::t('profile', 'Update User # ') . $model->id);
+
 ?>
 <div class="user-update">
 
@@ -40,10 +41,18 @@ $this->title = 'Update User: ' . $model->id;
         <?= $form->field($model, 'about')->textarea(['rows' => 5]) ?>
 
         <div class="form-group">
-            <?= Html::submitButton('Update', ['class' => 'btn btn-primary']) ?>
+            <?= Html::submitButton(Yii::t('profile', 'Update'),['class' => 'btn btn-primary']) ?>
         </div>
 
         <?php ActiveForm::end(); ?>
+
+        <?= Html::a(Yii::t('profile', 'Delete Profile'), ['delete-profile', 'id' => $model->id], [
+            'class' => 'btn btn-danger',
+            'data' => [
+                'confirm' => Yii::t('flash', 'Are you sure you want to delete your profile?'),
+                'method' => 'post',
+            ],
+        ]) ?>
 
     </div>
 

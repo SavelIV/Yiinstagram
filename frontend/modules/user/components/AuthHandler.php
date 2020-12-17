@@ -8,6 +8,7 @@ use frontend\models\User;
 use yii\authclient\ClientInterface;
 use yii\helpers\ArrayHelper;
 use frontend\models\events\UserRegisteredEvent;
+use yii\helpers\Html;
 
 /**
  * AuthHandler handles successful authentication via Yii auth component
@@ -37,19 +38,28 @@ class AuthHandler
             /* @var User $user */
             $user = $auth->user;
             $registered = Yii::$app->user->login($user);
-            Yii::$app->session->setFlash('success', Yii::t('flash', 'Hello {user}. You have login successfully.',
-                [
-                    'user' => Yii::$app->user->identity->username,
-                ])
+            if ($user->status == User::STATUS_DELETED) {
+                Yii::$app->user->logout();
+                Yii::$app->session->setFlash('success',
+                    Yii::t('flash', 'Sorry, user with this parameters has been deleted.')
+                );
+                return;
+            }
+            Yii::$app->session->setFlash('success',
+                Yii::t('flash', 'Hello {user}. You have login successfully.',
+                    [
+                        'user' => Html::encode(Yii::$app->user->identity->username),
+                    ])
             );
             return $registered;
         }
         if ($user = $this->createAccount($attributes)) {
             $registered = Yii::$app->user->login($user);
-            Yii::$app->session->setFlash('success', Yii::t('flash', 'New User {user} registered. Thank you for registration.',
-                [
-                    'user' => Yii::$app->user->identity->username,
-                ])
+            Yii::$app->session->setFlash('success',
+                Yii::t('flash', 'New User {user} registered. Thank you for registration.',
+                    [
+                        'user' => Html::encode(Yii::$app->user->identity->username),
+                    ])
             );
             return $registered;
         }
@@ -72,7 +82,7 @@ class AuthHandler
 
     /**
      *
-     * @param type $attributes
+     * @param array $attributes
      * @return User|null
      */
     private function createAccount($attributes)

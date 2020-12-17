@@ -11,4 +11,5 @@ return [
     'Newsfeed' => 'Лента новостей',
     'Create post' => 'Создать пост',
     'Logout ({username})' => 'Выход ({username})',
+    'Site search' => 'Поиск на сайте',
 ];

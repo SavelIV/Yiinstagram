@@ -83,7 +83,7 @@ a.desc:after {
     border: none;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
     .nav li > form > button.logout {
         display: block;
         text-align: left;
@@ -199,14 +199,33 @@ a.desc:after {
 .post-type-image {
     padding: 0;
     position: relative;
-    width:200px;
+    width:300px;
     height:200px;
-    background: #c2c2c2;
+    background: #ececec;
     border: 1px solid #000;
-    border-radius:3px;
+    border-radius:5px;
 }
 
 .post-type-image img{
+    position: absolute;
+    left:50%;
+    top:50%;
+    transform: translate(-50%, -50%);
+    max-width:100%;
+    max-height: 100%;
+}
+/*for newsfeed page */
+.page-posts .post-type-image {
+    padding: 0;
+    position: relative;
+    width:600px;
+    height:400px;
+    background: #ececec;
+    border: 1px solid #000;
+    border-radius: 10px;
+}
+
+.page-posts .post-type-image img{
     position: absolute;
     left:50%;
     top:50%;

@@ -25,13 +25,14 @@ $this->title = 'Users';
                     return Html::img($user->getPicture(), ['class' => 'author-image']);
                 },
             ],
+            'id',
             'username',
             'nickname',
             'email:email',
             'created_at:datetime',
             [
                 'attribute' => 'roles',
-                'value' => function($user) {
+                'value' => function ($user) {
                     /* @var $user User */
                     return implode(', ', $user->getRoles());
                 }

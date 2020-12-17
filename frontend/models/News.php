@@ -29,8 +29,8 @@ class News extends \yii\db\ActiveRecord
     {
         return [
             [['content'], 'string'],
-            [['status'], 'integer'],
-            [['title'], 'string', 'max' => 60],
+            [['status'], 'integer', 'default', 'value' => 0],
+            [['title'], 'string', 'max' => 100],
         ];
     }
 

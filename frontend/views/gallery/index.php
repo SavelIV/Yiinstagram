@@ -1,13 +1,12 @@
 <?php
-/*
- * @var $this yii\web\View
- */
+
+/* @var $this yii\web\View */
 
 use frontend\assets\GalleryAsset;
 
 GalleryAsset::register($this);
 $this->registerJsFile('@web/js/gallery/scripts.js', ['depends' => [
-        GalleryAsset::className()
+    GalleryAsset::class
 ]]);
 ?>
 
@@ -31,7 +30,7 @@ $this->registerJsFile('@web/js/gallery/scripts.js', ['depends' => [
 
     <div class="wedding places">
         <img src="/files/photos/2.jpg" alt="image">
-    </div>	
+    </div>
 
     <div class="wedding places">
         <img src="/files/photos/3.jpg" alt="image">
@@ -51,12 +50,12 @@ $this->registerJsFile('@web/js/gallery/scripts.js', ['depends' => [
 
     <div class="places people wedding">
         <img src="/files/photos/7.jpg" alt="image">
-    </div>	
+    </div>
 
     <div class="places wedding">
         <img src="/files/photos/8.jpg" alt="image">
     </div>
-    
+
     <div class="food">
         <img src="/files/photos/9.jpg" alt="image">
     </div>
@@ -75,12 +74,12 @@ $this->registerJsFile('@web/js/gallery/scripts.js', ['depends' => [
 
     <div class="food">
         <img src="/files/photos/13.jpg" alt="image">
-    </div>	
+    </div>
 
     <div class="people places wedding">
         <img src="/files/photos/14.jpg" alt="image">
     </div>
-    
+
     <div class="places">
         <img src="/files/photos/15.jpg" alt="image">
     </div>

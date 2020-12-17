@@ -27,7 +27,9 @@
         "intervention/image": "^2.5",
         "bower-asset/font-awesome": "4.4.0",
         "bower-asset/jquery": "3.5.1",
-        "bower-asset/bootstrap": "3.3.5"
+        "bower-asset/bootstrap": "3.3.5",
+        "kop/yii2-scroll-pager": "dev-master",
+        "electrolinux/phpquery": "^0.9.6"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

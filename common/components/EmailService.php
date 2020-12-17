@@ -24,7 +24,8 @@ class EmailService extends Component {
                 ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' admin'])
                 ->setTo($event->getEmail())
                 ->setSubject($event->getSubject())
-                ->setHtmlBody('<b>Добро пожаловать на сайт '. Yii::$app->name.'</b>')
+                ->setHtmlBody('<h1>Добро пожаловать на сайт '. Yii::$app->name.'</h1>'
+                .'<p>Это тестовое письмо, больше мы Вас не потревожим.</p>')
                 ->send();
     }
    /**
