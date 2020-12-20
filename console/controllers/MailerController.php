@@ -10,7 +10,7 @@ use console\models\Sender;
 use Yii;
 
 /**
- * @author Igor
+ * Cron tasks
  */
 class MailerController extends Controller
 {
@@ -52,5 +52,15 @@ class MailerController extends Controller
         }
 
         Sender::runAdmin($newsCount, $emailsCount, $statusesCount, $subscribers, $noNews, $noSubscribers);
+    }
+
+    /**
+     * Updates news feed in DB by Cron:
+     * %progdir%\modules\php\%phpdriver%\php-win.exe -c %progdir%\modules\php\%phpdriver%\php.ini -q -f %sitedir%\yii\yii mailer/parse
+     * it's openserver settings on localhost
+     */
+    public function actionParse()
+    {
+        Parser::parseList();
     }
 }

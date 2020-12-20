@@ -31,28 +31,23 @@ $this->title = Html::encode(Yii::t('post', '{username}`s post', [
                                 <?php echo Html::encode($post->user->username); ?>
                             </a>
                         </div>
-
                     <?php endif; ?>
                 </div>
-            </div>
-            &nbsp;
+            </div>&nbsp;
             <div class="post-image">
                 <img src="<?php echo $post->getImage(); ?>"/>
-            </div>
-            &nbsp;
+            </div>&nbsp;
             <div class="post-description">
                 <p><?php echo HtmlPurifier::process($post->description); ?></p>
             </div>
             <div class="post-date">
                 <span><?php echo Yii::$app->formatter->asDatetime($post->created_at); ?></span>
             </div>
-
             <hr>
             <div class="alert alert-success display-none fade in" id="liked-success"><?php echo Yii::t('post', 'Liked!'); ?></div>
             <div class="alert alert-danger display-none fade in" id="unliked-success"><?php echo Yii::t('post', 'Unliked!'); ?></div>
             <div class="alert alert-info display-none fade in" id="reported-success"><?php echo Yii::t('post', 'Post has been reported!'); ?></div>
             <div class="alert alert-warning display-none fade in" id="unreported-success"><?php echo Yii::t('post', 'Undone!'); ?></div>
-
             <div class="post-bottom">
                 <div class="post-likes">
                     <i class="fa fa-lg fa-heart-o"></i>
@@ -74,7 +69,8 @@ $this->title = Html::encode(Yii::t('post', '{username}`s post', [
                 </div>
                 <div class="post-comments">
                     <a href="<?php echo Url::to(['/post/default/view', 'id' => $post->id]); ?>">
-                        <?php echo Yii::t('comment', 'Comments:'); ?> <?php echo ($post->countComments()) ? $post->countComments() : 0; ?>
+                        <?php echo Yii::t('comment', 'Comments:'); ?>
+                        <?php echo ($post->countComments()) ? $post->countComments() : 0; ?>
                     </a>
                 </div>
                 <?php if ($currentUser && !$currentUser->equals($post->user)): ?>

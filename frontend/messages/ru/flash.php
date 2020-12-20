@@ -46,4 +46,6 @@ return [
     'The above error occurred while the Web server was processing your request.' => 'Во время обработки вашего запроса веб-сервером возникла ошибка.',
     'Not found (#404)' => 'Страница не найдена (#404)',
     'Nothing found.' => 'Ничего не найдено',
+    'Show more news' => 'Показать больше новостей',
+    'Show more posts' => 'Показать больше постов',
 ];

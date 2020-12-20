@@ -15,7 +15,7 @@ $this->title = Html::encode(Yii::t('menu', 'Newsfeed'));
 
     <div class="col-lg-12 text-center">
         <h1><?= Html::encode($this->title) ?></h1>
-        <?php echo NewsList::widget( ['size' => 800]); ?>
+        <?php echo NewsList::widget( ['size' => 500]); ?>
     </div>
 
 </div>

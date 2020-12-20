@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use frontend\models\Subscribe;
 use Yii;
 use yii\web\Controller;
 use frontend\models\ContactForm;
@@ -13,8 +14,8 @@ use frontend\models\User;
  */
 class SiteController extends Controller
 {
-    const FEED_POSTS_LIMIT = 20;
-    const ACTIVE_USERS_LIMIT = 11;
+    const FEED_POSTS_LIMIT = 7;
+    const ACTIVE_USERS_LIMIT = 21;
 
     /**
      * {@inheritdoc}
@@ -47,10 +48,13 @@ class SiteController extends Controller
             $feedItems = $currentUser->getFeed(self::FEED_POSTS_LIMIT);
         }
 
+        $isSubscribed = Subscribe::isSubscribed();
+
         return $this->render('index', [
             'users' => $users,
             'feedItems' => $feedItems,
             'currentUser' => $currentUser,
+            'isSubscribed' => $isSubscribed,
         ]);
     }
 
@@ -108,7 +112,6 @@ class SiteController extends Controller
      */
     public function actionAbout()
     {
-
         return $this->render('about');
     }
 

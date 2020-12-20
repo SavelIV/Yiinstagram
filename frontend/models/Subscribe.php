@@ -43,4 +43,17 @@ class Subscribe extends Model
      $sql = "DELETE FROM subscriber WHERE id = '$id'";
      return Yii::$app->db->createCommand($sql)->execute();
     }
+
+    /**
+     * Is user subscribed on daily emails
+     * @return bool
+     */
+
+    public static function isSubscribed()
+    {
+        $sql = 'SELECT email FROM subscriber';
+        $emails = Yii::$app->db->createCommand($sql)->queryColumn();
+
+        return in_array(Yii::$app->user->identity->email, $emails);
+    }
 }

@@ -11,13 +11,16 @@ class SearchController extends \yii\web\Controller
         $model = new SearchForm();
         
         $results = null;
+        $searched = 'no';
         
         if ($model->load(Yii::$app->request->post())) {
              $results = $model->search();
+             $searched = 'yes';
         }
         return $this->render('index',[
             'model' => $model,
             'results' => $results,
+            'searched' => $searched,
         ]);
     }
     

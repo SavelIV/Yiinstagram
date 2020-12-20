@@ -356,7 +356,7 @@ class User extends ActiveRecord implements IdentityInterface
 
 
     /**
-     * Get data for newsfeed
+     * Get data for main page
      * @param int $limit
      * @return array
      */
@@ -364,6 +364,16 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $order = ['post_created_at' => SORT_DESC];
         return $this->hasMany(Feed::class, ['user_id' => 'id'])->orderBy($order)->limit($limit)->all();
+    }
+
+   /**
+     * Get data for posts feed
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPostsFeed()
+    {
+        $order = ['post_created_at' => SORT_DESC];
+        return $this->hasMany(Feed::class, ['user_id' => 'id'])->orderBy($order);
     }
 
     /**

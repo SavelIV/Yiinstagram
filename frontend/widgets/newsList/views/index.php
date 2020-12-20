@@ -1,6 +1,7 @@
 <?php
 
 /* @var $size frontend\models\Parser */
+
 /* @var $dataProvider frontend\controllers\ParserController */
 
 use yii\widgets\ListView;
@@ -15,8 +16,11 @@ use yii\widgets\ListView;
     'viewParams' => [
         'size' => $size,
     ],
-    'pager' => ['class' => \kop\y2sp\ScrollPager::class]
-    ]);
+    'pager' => [
+        'class' => \kop\y2sp\ScrollPager::class,
+        'triggerText' => Yii::t('flash', 'Show more news'),
+    ]
+]);
 
 
 

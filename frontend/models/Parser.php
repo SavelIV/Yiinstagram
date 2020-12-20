@@ -90,23 +90,23 @@ class Parser
         return $count;
     }
 
-    /**
-     * @param integer $max
-     * @return array
-     */
-    public static function getNewsList($max)
-    {
-        $max = intval($max);
-
-        $result =  News::find()->orderBy('id DESC')->limit($max)->all();
-
-        if (!empty($result) && is_array($result)) {
-            foreach ($result as &$item) {
-                $item['content'] = Yii::$app->stringHelper->getShort($item['content']);
-            }
-        }
-        return $result;
-    }
+//    /**
+//     * @param integer $max
+//     * @return array
+//     */
+//    public static function getNewsList($max)
+//    {
+//        $max = intval($max);
+//
+//        $result =  News::find()->orderBy('id DESC')->limit($max)->all();
+//
+//        if (!empty($result) && is_array($result)) {
+//            foreach ($result as &$item) {
+//                $item['content'] = Yii::$app->stringHelper->getShort($item['content']);
+//            }
+//        }
+//        return $result;
+//    }
 
     /**
      *

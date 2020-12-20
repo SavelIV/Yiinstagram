@@ -3,9 +3,7 @@
 namespace frontend\widgets\newsList;
 
 use frontend\models\News;
-use Yii;
 use yii\base\Widget;
-use frontend\models\Test;
 use yii\data\ActiveDataProvider;
 
 /**

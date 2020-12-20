@@ -1,7 +1,7 @@
 <?php
 
 /* @var $model  frontend\models\SearchForm */
-
+/* @var $searched  frontend\controllers\SearchController */
 /* @var $results [] frontend\controllers\SearchController */
 
 use yii\helpers\Url;
@@ -30,14 +30,15 @@ $this->title = Html::encode(Yii::t('flash', 'Fulltext search'));
         <?php if ($results): ?>
             <?php foreach ($results as $item): ?>
                 <h4><a href="<?php echo Url::to(['parser/view', 'id' => $item['id']]); ?>">
-                        <?php echo $item['title']; ?>
+                        <?php echo Html::encode($item['title']); ?>
                     </a>
                 </h4>
+                <?php echo Html::img($item['picture'], ['width'=>'300']); ?>
                 <hr>
-                <?php echo HighlightHelper::process($model->keyword, $item['content']); ?>
+                <?php echo HighlightHelper::process($model->keyword, Html::encode($item['content'])); ?>
                 <hr>
             <?php endforeach; ?>
-        <?php else: ?>
+        <?php elseif ($searched == 'yes'): ?>
             <p><?php echo Yii::t('flash', 'Nothing found.'); ?></p>
         <?php endif; ?>
 

@@ -3,23 +3,23 @@
 /* @var $this yii\web\View */
 /* @var $users frontend\models\User */
 /* @var $feedItems [] frontend\models\Feed */
-
+/* @var $isSubscribed  frontend\controllers\SiteController */
 /* @var $currentUser frontend\models\User */
 
+use frontend\models\Feed;
+use frontend\widgets\newsList\NewsList;
 use yii\web\JqueryAsset;
 use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\helpers\HtmlPurifier;
-use frontend\widgets\newsList\NewsList;
 
 $this->title = Html::encode(Yii::t('home', 'Main page'));
 
 ?>
-
     <div class="jumbotron">
         <h1><?php echo Yii::t('home', 'Welcome!'); ?></h1>
         <h2><?php echo Yii::t('home', 'Hello, '); ?>
-        <?php if (Yii::$app->user->identity): ?>
+            <?php if (Yii::$app->user->identity): ?>
             <div class="photo center-block">
                 <img id="profile-picture" class="author-image" src="<?php echo $currentUser->getPicture(); ?>"/>
             </div>
@@ -28,15 +28,15 @@ $this->title = Html::encode(Yii::t('home', 'Main page'));
         <?php else: ?>
             <?php echo Yii::t('home', 'user. Please register or login to see all features.'); ?></h2>
         <?php endif; ?>
-
-        <p><a class="btn btn-lg btn-success" href="<?php echo Url::to(['newsletter/subscribe']); ?>">
-                <?php echo Yii::t('home', 'Subscribe to Newsletters'); ?>
-            </a>
-        </p>
+        <?php if (!$isSubscribed): ?>
+            <p>
+                <a class="btn btn-lg btn-success" href="<?php echo Url::to(['newsletter/subscribe']); ?>">
+                    <?php echo Yii::t('home', 'Subscribe to Newsletters'); ?>
+                </a>
+            </p>
+        <?php endif; ?>
     </div>
-
     <div class="body-content">
-
         <div class="row">
             <div class="col-lg-4 text-center">
                 <h2><?php echo Yii::t('home', 'Last News:'); ?></h2>
@@ -64,7 +64,6 @@ $this->title = Html::encode(Yii::t('home', 'Main page'));
                     <?php if ($feedItems): ?>
                         <?php foreach ($feedItems as $feedItem): ?>
                             <?php /* @var $feedItem Feed */ ?>
-
                             <!-- feed item -->
                             <div class="page page-post">
                                 <div class="blog-posts">
@@ -114,7 +113,7 @@ $this->title = Html::encode(Yii::t('home', 'Main page'));
                                             </div>
                                             <div class="post-comments">
                                                 <a href="<?php echo Url::to(['/post/default/view', 'id' => $feedItem->post_id]); ?>">
-                                                    <?php echo Yii::t('comment', 'Comments:'); ?> <?php echo ($feedItem->countComments()) ? $feedItem->countComments() : 0; ?>
+                                                    <?php echo Yii::t('comment', 'Comments:'); ?><?php echo ($feedItem->countComments()) ? $feedItem->countComments() : 0; ?>
                                                 </a>
                                             </div>
                                             <div class="post-report">
@@ -125,13 +124,15 @@ $this->title = Html::encode(Yii::t('home', 'Main page'));
                                                    class="btn btn-default button-complain <?php echo ($feedItem->isReported($currentUser)) ? "display-none" : ""; ?>"
                                                    data-id="<?php echo $feedItem->post_id; ?>">
                                                     <?php echo Yii::t('home', 'Report post'); ?>
-                                                    <i class="fa fa-cog fa-spin fa-fw icon-preloader" style="display:none"></i>
+                                                    <i class="fa fa-cog fa-spin fa-fw icon-preloader"
+                                                       style="display:none"></i>
                                                 </a>
                                                 <a href="#"
                                                    class="btn btn-default button-undo <?php echo ($feedItem->isReported($currentUser)) ? "" : "display-none"; ?>"
                                                    data-id="<?php echo $feedItem->post_id; ?>">
                                                     <?php echo Yii::t('home', 'Undo'); ?>
-                                                    <i class="fa fa-cog fa-spin fa-fw icon-preloader" style="display:none"></i>
+                                                    <i class="fa fa-cog fa-spin fa-fw icon-preloader"
+                                                       style="display:none"></i>
                                                 </a>
                                             </div>
                                         </div>
@@ -140,22 +141,18 @@ $this->title = Html::encode(Yii::t('home', 'Main page'));
                             </div>
                             <!-- feed item -->
                         <?php endforeach; ?>
-
                     <?php else: ?>
                         <div class="text-center">
-                            <?php echo Yii::t('home', 'None of Your friends posted yet!'); ?>
+                            <?php echo Yii::t('home', 'None of Your friends posted yet.'); ?>
                         </div>
                     <?php endif; ?>
-
                 <?php else: ?>
                     <hr>
                     <p><?php echo Yii::t('home', 'seen after login.'); ?></p>
                 <?php endif; ?>
-
             </div>
         </div>
     </div>
-
 <?php
 //Register tooltip/popover initialization javascript
 $this->registerJsFile('@web/js/bs3-tooltips-and-popovers.js', ['depends' => \yii\web\JqueryAsset::class,]);
