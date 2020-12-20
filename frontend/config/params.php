@@ -9,7 +9,7 @@ return [
 
     'maxFileSize' => 1024 * 1024 * 4, // 4 megabites
     'storagePath' => '@frontend/web/uploads/',
-    'storageUri' => '/uploads/',   // http://yii2site.com/uploads/f1/d7/739f9a9c9a99294.jpg
+    'storageUri' => '/uploads/',   // http://sitename.com/uploads/f1/d7/739f9a9c9a99294.jpg
 
     'postPicture' => [
         'maxWidth' => 1024,

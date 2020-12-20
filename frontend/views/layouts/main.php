@@ -38,7 +38,7 @@ FontAwesomeAsset::register($this);
                 <div class="col-md-4 col-sm-4 navicons-topbar">
                     <ul>
                         <li class="blog-search">
-                            <a href="<?php echo Url::to(['search/index']); ?>" title="<?php echo Yii::t('menu', 'Site search') ?>"><i class="fa fa-search"></i></a>
+                            <a href="<?php echo Url::to(['/search/index']); ?>" title="<?php echo Yii::t('menu', 'Site search') ?>"><i class="fa fa-search"></i></a>
                         </li>
                         <li>
                             <?= Html::beginForm(['/site/language']) ?>
