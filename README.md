@@ -1,60 +1,67 @@
-<p align="center">
-    <a href="https://github.com/yiisoft" target="_blank">
-        <img src="https://avatars0.githubusercontent.com/u/993323" height="100px">
-    </a>
-    <h1 align="center">Yii 2 Advanced Project Template</h1>
-    <br>
-</p>
+Yiinstagram is a small analogue of the well-known resource for sharing photos and various information, built on Yii2 framework.
 
-Yii 2 Advanced Project Template is a skeleton [Yii 2](http://www.yiiframework.com/) application best for
-developing complex Web applications with multiple tiers.
+The goal is to keep photo diaries online, the ability to make friends and make acquaintances, share photos and impressions, follow the latest world news and the news of friends.
 
-The template includes three tiers: front end, back end, and console, each of which
-is a separate Yii application.
+Key features:
 
-The template is designed to work in a team development environment. It supports
-deploying the application in different environments.
+Creating and editing of your own profile.
+Uploading and publishing of your profile photos.
+The ability to make friends and subscribe to other network members.
+Update feed with the ability to comment and like.
+Authorization through various social networks.
+Subscription to the daily newsletters.
+Alerts page: likes and subscriptions to the user`s profile.
+Pages with lists of subscriptions and followers.
+Full-text search for publications.
+Ability to send complaints about other members publications.
+Administrative panel for handling complaints and managing users.
+This project is made on the Yii2 framework using MySQL, Redis (likes, dislikes, subscriptions, followers, complaints about posts), Sphinx (full-text search).
 
-Documentation is at [docs/guide/README.md](docs/guide/README.md).
+There is oAuth authorization implemented, console mail scripts run.
 
-[![Latest Stable Version](https://img.shields.io/packagist/v/yiisoft/yii2-app-advanced.svg)](https://packagist.org/packages/yiisoft/yii2-app-advanced)
-[![Total Downloads](https://img.shields.io/packagist/dt/yiisoft/yii2-app-advanced.svg)](https://packagist.org/packages/yiisoft/yii2-app-advanced)
-[![Build Status](https://travis-ci.org/yiisoft/yii2-app-advanced.svg?branch=master)](https://travis-ci.org/yiisoft/yii2-app-advanced)
+There is original principles of user files storing are applied, the watermark is used (intervention library).
 
-DIRECTORY STRUCTURE
--------------------
+The high performance news feed (user posts) is formed (instant updates for all subscribers).
 
-```
-common
-    config/              contains shared configurations
-    mail/                contains view files for e-mails
-    models/              contains model classes used in both backend and frontend
-    tests/               contains tests for common classes    
-console
-    config/              contains console configurations
-    controllers/         contains console controllers (commands)
-    migrations/          contains database migrations
-    models/              contains console-specific model classes
-    runtime/             contains files generated during runtime
-backend
-    assets/              contains application assets such as JavaScript and CSS
-    config/              contains backend configurations
-    controllers/         contains Web controller classes
-    models/              contains backend-specific model classes
-    runtime/             contains files generated during runtime
-    tests/               contains tests for backend application    
-    views/               contains view files for the Web application
-    web/                 contains the entry script and Web resources
-frontend
-    assets/              contains application assets such as JavaScript and CSS
-    config/              contains frontend configurations
-    controllers/         contains Web controller classes
-    models/              contains frontend-specific model classes
-    runtime/             contains files generated during runtime
-    tests/               contains tests for frontend application
-    views/               contains view files for the Web application
-    web/                 contains the entry script and Web resources
-    widgets/             contains frontend widgets
-vendor/                  contains dependent 3rd-party packages
-environments/            contains environment-based overrides
-```
+Hourly updated by cron parser of the leading Russian news Internet sites is implemented.
+
+The administration system is based on roles (RBAC).
+
+Full internationalization done (i18n).
+
+Functional and unit tests are written.
+
+-------------------------------------------------------------------------------------------------------------------------------------------
+
+Yiinstagram - небольшой аналог известного ресурса для обмена фотографиями и различной информацией, построенный на фреймворке Yii2.
+
+Цель - ведение фото-дневников онлайн, возможность дружить и заводить знакомства, делиться фотографиями и впечатлениями, следить за последними мировыми новостями и новостями знакомых.
+
+Основные возможности:
+
+Создание и редактирование собственного профиля.
+Загрузка и публикация фотографий в профиль.
+Возможность заводить друзей и подписываться на других участников сети.
+Лента обновлений с возможностью комментировать и ставить лайки.
+Возможность регистрироваться на сайте через различные социальные сети.
+Подписка на ежедневную рассылку свежих новостей.
+Страница оповещений: лайки и подписки на профиль пользователя.
+Страницы со списками подписок и подписчиков.
+Полнотекстовый поиск по публикациям.
+Возможность отправлять жалобы на публикации других участников.
+Административная панель для рассмотрения жалоб и управления пользователями.
+Данный проект сделан на фреймворке Yii2 с использованием MySQL, Redis (лайки, дизлайки, подписки, фолловеры, жалобы на посты), Sphinx (полнотекстовый поиск).
+
+Реализована oAuth авторизация, работают консольные скрипты почтовой рассылки.
+
+Применены оригинальные принципы хранения файлов пользователей, используется watermark (библиотека intervention).
+
+Лента новостей (постов пользователей) сформирована с учетом высокого быстродействия (мгновенное обновление у всех подписчиков).
+
+Реализован парсер новостей с ведущих Российских интернет площадок, ежечасно обновляемый по крону.
+
+Система администрирования построена на основе ролей (RBAC).
+
+Сделана полная интернационализация (i18n).
+
+Написаны функциональные и модульные тесты.
