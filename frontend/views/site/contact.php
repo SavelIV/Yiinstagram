@@ -2,7 +2,7 @@
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
-/* @var $model \frontend\models\ContactForm */
+/* @var $model frontend\models\ContactForm */
 
 use frontend\widgets\newsList\NewsList;
 use yii\helpers\Html;

@@ -19,7 +19,7 @@ $this->title =  Html::encode(Yii::t('menu', 'Newsfeed'));
                             <?php echo PostsList::widget(); ?>
                         <?php else: ?>
                             <div class="col-md-12">
-                                <?php echo Yii::t('home', 'None of Your friends posted yet!'); ?>
+                                <?php echo Yii::t('home', 'None of Your friends posted yet.'); ?>
                             </div>
                         <?php endif; ?>
                     </div>

@@ -23,6 +23,7 @@ return [
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-backend',
+            'enableCsrfValidation' => true,
         ],
         'user' => [
             'identityClass' => 'backend\models\User',
@@ -54,6 +55,6 @@ return [
     ],
     'params' => $params,
     'aliases' => [
-        '@userPictures' => 'http://yii2site.com/img',
+        '@userPictures' => 'https://yiinstagram.saviv.site/img',
     ]
 ];

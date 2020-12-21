@@ -15,7 +15,7 @@ use frontend\models\User;
 class SiteController extends Controller
 {
     const FEED_POSTS_LIMIT = 7;
-    const ACTIVE_USERS_LIMIT = 21;
+    const ACTIVE_USERS_LIMIT = 20;
 
     /**
      * {@inheritdoc}

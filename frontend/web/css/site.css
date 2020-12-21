@@ -110,7 +110,7 @@ a.desc:after {
 .alert {
     animation: fadeOut ease 15s;
     -webkit-animation: fadeOut ease 15s;
-    -moz-animation: fadeOut ease 15;
+    -moz-animation: fadeOut ease 15s;
     -o-animation: fadeOut ease 15s;
     -ms-animation: fadeOut ease 15s;
 }

@@ -28,6 +28,7 @@ return [
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-frontend',
+            'enableCsrfValidation' => true,
         ],
         'user' => [
             'identityClass' => 'frontend\models\User',
@@ -84,6 +85,6 @@ return [
     'params' => $params,
     'aliases' => [
         '@images' => '/files/photos',
-        '@site' => 'http://yii2site.com',
+        '@site' => 'https://yiinstagram.saviv.site',
     ]
 ];

@@ -32,7 +32,7 @@ return [
             ],
         ],
         'urlManager' => [
-            'baseUrl' => 'http://yii2site.com',
+            'baseUrl' => 'https://yiinstagram.saviv.site',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
