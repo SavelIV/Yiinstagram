@@ -82,6 +82,7 @@ class Post extends \yii\db\ActiveRecord
         /* @var $redis Connection */
         $redis = Yii::$app->redis;
         $redis->del("post:{$this->id}:complaints");
+        $redis->del("post:{$this->id}:comments");
 
         $this->deleteUsersLikesFromRedis();
         $this->deleteImage();
