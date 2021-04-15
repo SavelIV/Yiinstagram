@@ -1,3 +1,4 @@
+A pet project.
 Yiinstagram is a small analogue of the well-known resource for sharing photos and various information, built on Yii2 framework.
 
 The goal is to keep photo diaries online, the ability to make friends and make acquaintances, share photos and impressions, follow the latest world news and the news of friends.
